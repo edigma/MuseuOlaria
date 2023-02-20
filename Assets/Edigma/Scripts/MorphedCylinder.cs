@@ -10,7 +10,7 @@ public class MorphedCylinder : MonoBehaviour
     public float radius = 1f;
     public float height = 2f;
 
-    public GameObject[] morphers;
+    public Morpher[] morphers;
 
     public GameObject vert;
     public GameObject vert2;
@@ -19,7 +19,7 @@ public class MorphedCylinder : MonoBehaviour
     int[] triangles;
     Vector3[] normals;
     Mesh mesh;
-    public float interactionRadius = .5f;
+    //public float interactionRadius = .5f;
     public float rotateSpeed = 1.0f;
 
     public GameObject[] verts;
@@ -125,7 +125,8 @@ public class MorphedCylinder : MonoBehaviour
     void FixedUpdate()
     {
 
-        if(Time.time <= 5.0f) {
+        if (Time.time <= 5.0f)
+        {
             return;
 
         }
@@ -140,7 +141,7 @@ public class MorphedCylinder : MonoBehaviour
         }
 
         float angleStep = 2f * Mathf.PI / segments;
-        foreach (GameObject go in morphers)
+        foreach (Morpher go in morphers)
         {
             Vector3 posY = go.transform.position;
             posY.y = 0;
@@ -159,6 +160,19 @@ public class MorphedCylinder : MonoBehaviour
             float angle = 0f;
             for (int i = 0; i < layers; i++)
             {
+                float y = (float)i / (float)(layers - 1) * height;
+                Vector3 yV = new Vector3(0, y, 0);
+                Vector3 yVWorldPos = transform.TransformPoint(yV);
+
+
+                if (Mathf.Abs(yVWorldPos.y - pos.y) > go.interactionRadius)
+                {
+                    vertexIndex += segments;
+                    angle += angleStep * segments;
+                    continue;
+                }
+
+
                 for (int j = 0; j <= segments; j++)
                 {
                     Vector3 vertPos = vertices[vertexIndex];
@@ -169,10 +183,12 @@ public class MorphedCylinder : MonoBehaviour
 
 
                     float force = Vector3.Magnitude(vertWorldPos - pos);
-                  
-                    if (force < interactionRadius)
+
+                    if (force < go.interactionRadius)
                     {
-                        vradius -= 0.1f * Time.deltaTime * morphForce * (interactionRadius - force);
+                        float realForce = (go.interactionRadius - force);
+
+                        vradius -= 0.1f * Time.deltaTime * morphForce * realForce;
                     }
                     else
                     {
@@ -181,7 +197,8 @@ public class MorphedCylinder : MonoBehaviour
                         angle += angleStep;
                         continue;
                     }
-                    if(vradius <= radius * 0.1f) {
+                    if (vradius <= radius * 0.1f)
+                    {
                         vradius = radius * 0.1f;
                     }
 
