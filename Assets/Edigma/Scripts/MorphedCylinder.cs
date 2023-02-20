@@ -19,6 +19,8 @@ public class MorphedCylinder : MonoBehaviour
     int[] triangles;
     Vector3[] normals;
     Mesh mesh;
+    public float interactionRadius = .5f;
+    public float rotateSpeed = 1.0f;
 
     public GameObject[] verts;
 
@@ -120,9 +122,14 @@ public class MorphedCylinder : MonoBehaviour
 
     public float anim = 1.0f;
 
-    void Update()
+    void FixedUpdate()
     {
-        transform.Rotate(new Vector3(0, 1, 0));
+
+        if(Time.time <= 5.0f) {
+            return;
+
+        }
+        transform.Rotate(new Vector3(0, rotateSpeed, 0));
 
         anim += Time.deltaTime * 5;
 
@@ -147,8 +154,6 @@ public class MorphedCylinder : MonoBehaviour
                 continue;
             }
 
-
-
             Vector3 pos = go.transform.position;
             int vertexIndex = 0;
             float angle = 0f;
@@ -158,24 +163,16 @@ public class MorphedCylinder : MonoBehaviour
                 {
                     Vector3 vertPos = vertices[vertexIndex];
 
-                    float radius = verticesRadius[vertexIndex];
+                    float vradius = verticesRadius[vertexIndex];
 
                     Vector3 vertWorldPos = transform.TransformPoint(vertPos);
 
 
-
                     float force = Vector3.Magnitude(vertWorldPos - pos);
-                    if (i == 15 && j == 0 && debug)
+                  
+                    if (force < interactionRadius)
                     {
-                        Vector3 loo = vertPos - pos;
-                        Debug.Log(vertexIndex + " " + verts[vertexIndex].transform.position + " " + verts[vertexIndex].transform.localPosition);
-                        Debug.Log(pos);
-                        Debug.Log(loo.x + " " + loo.y + " " + loo.z + "\n\n");
-                    }
-
-                    if (force < 0.01f)
-                    {
-                        radius -= 0.1f * Time.deltaTime * morphForce * (0.01f - force);
+                        vradius -= 0.1f * Time.deltaTime * morphForce * (interactionRadius - force);
                     }
                     else
                     {
@@ -184,22 +181,23 @@ public class MorphedCylinder : MonoBehaviour
                         angle += angleStep;
                         continue;
                     }
+                    if(vradius <= radius * 0.1f) {
+                        vradius = radius * 0.1f;
+                    }
 
-                    float x = Mathf.Cos(angle) * radius;
-                    float z = Mathf.Sin(angle) * radius;
+                    float x = Mathf.Cos(angle) * vradius;
+                    float z = Mathf.Sin(angle) * vradius;
 
-                    verticesRadius[vertexIndex] = radius;
+                    verticesRadius[vertexIndex] = vradius;
                     vertices[vertexIndex] = new Vector3(x, vertPos.y, z);
                     if (debug)
                     {
                         verts[vertexIndex].transform.localPosition = vertices[vertexIndex];
                     }
-                    normals[vertexIndex] = new Vector3(x, 0f, z).normalized;
+                    //normals[vertexIndex] = new Vector3(x, 0f, z).normalized;
 
                     vertexIndex++;
                     angle += angleStep;
-
-
                 }
             }
         }
