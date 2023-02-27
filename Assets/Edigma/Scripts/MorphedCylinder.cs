@@ -10,6 +10,8 @@ public class MorphedCylinder : MonoBehaviour
     public float radius = 1f;
     public float height = 2f;
 
+    public Mesh startMesh;
+
     public Morpher[] morphers;
 
     public GameObject vert;
