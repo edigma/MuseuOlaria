@@ -733,11 +733,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e4ee2c2254ea59438dfffcc37b468f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoRotate: 0
+  autoRotate: 1
   rotFactor: 1
   morphForce: 500
   segments: 300
-  layers: 200
+  layers: 150
   radius: 0.1
   insideRadius: 0.09
   height: 0.3

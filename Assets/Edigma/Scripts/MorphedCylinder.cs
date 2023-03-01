@@ -28,13 +28,13 @@ public class MorphedCylinder : MonoBehaviour
     public float rotateSpeed = 1.0f;
 
     public GameObject[] verts;
-    float [] cos;
-    float [] sin;
+    float[] cos;
+    float[] sin;
 
     bool debug = false;
     void DoTriangles()
     {
-        for (int i = 0; i < (layers+ (layers / 3)) - 1; i++)
+        for (int i = 0; i < (layers + (layers / 3)) - 1; i++)
         {
             for (int j = 0; j < segments; j++)
             {
@@ -44,12 +44,12 @@ public class MorphedCylinder : MonoBehaviour
                 int i3 = (i + 1) * (segments) + j;
                 int i4 = (i + 1) * (segments) + j + 1;
                 triangles[triangleIndex] = i1;
-                triangles[triangleIndex+1] = i3;
-                triangles[triangleIndex+2] = i2;
+                triangles[triangleIndex + 1] = i3;
+                triangles[triangleIndex + 2] = i2;
 
-                triangles[triangleIndex+3] = i2;
-                triangles[triangleIndex+4] = i3;
-                triangles[triangleIndex+5] = i4;
+                triangles[triangleIndex + 3] = i2;
+                triangles[triangleIndex + 4] = i3;
+                triangles[triangleIndex + 5] = i4;
             }
         }
     }
@@ -72,10 +72,10 @@ public class MorphedCylinder : MonoBehaviour
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
 
-        int numVertices = (segments + 1) * (layers+ (layers / 3));
+        int numVertices = (segments + 1) * (layers + (layers / 3));
         vertices = new Vector3[numVertices];
         normals = new Vector3[numVertices];
-        triangles = new int[segments * (layers+ (layers / 3)) * 6];
+        triangles = new int[segments * (layers + (layers / 3)) * 6];
 
         verticesRadius = new float[numVertices];
         if (debug)
@@ -88,18 +88,18 @@ public class MorphedCylinder : MonoBehaviour
         sin = new float[segments + 1];
         for (int j = 0; j <= segments; j++)
         {
-           cos[j] = Mathf.Cos(j * angleStep);  
-           sin[j] = Mathf.Sin(j * angleStep);
+            cos[j] = Mathf.Cos(j * angleStep);
+            sin[j] = Mathf.Sin(j * angleStep);
         }
 
-        for (int i = 0; i < layers+ (layers / 3); i++)
+        for (int i = 0; i < layers + (layers / 3); i++)
         {
-                
+
             float thick_radius = 1.0f;
             float y = 0;
             if (i > layers)
             {
-                y = (float)(layers - ((i - 1 ) - layers)) / (float)(layers - 1) * height;
+                y = (float)(layers - ((i - 1) - layers)) / (float)(layers - 1) * height;
                 thick_radius = insideRadius;
             }
             else
@@ -117,12 +117,12 @@ public class MorphedCylinder : MonoBehaviour
                 normals[vertexIndex] = (i > layers ? -1 : 1) * new Vector3(x, 0f, z).normalized;
                 verticesRadius[vertexIndex] = thick_radius;
 
-                if (j == 0)
+                if (false)
                 {
                     GameObject oo = Instantiate(vert, new Vector3(0, 0, 0), Quaternion.identity);
                     oo.transform.parent = this.transform;
                     oo.transform.localPosition = vertices[vertexIndex];
-                    oo.name = " " + vertexIndex;
+                    oo.name = " " + vertexIndex + " " + y;
                     if (i == 15 && j == 0)
                     {
                         //Debug.Log("created" + vertexIndex + " " + oo.transform.localPosition);
@@ -182,7 +182,6 @@ public class MorphedCylinder : MonoBehaviour
 
     void FixedUpdate()
     {
-        return;
         if (Time.time <= 2.0f)
         {
             return;
@@ -211,9 +210,11 @@ public class MorphedCylinder : MonoBehaviour
         float angleStep = 2f * Mathf.PI / segments;
         foreach (Morpher go in morphers)
         {
-            if(!go.enabled) {
+            if (!go.isActiveAndEnabled)
+            {
                 continue;
             }
+
             Vector3 posY = go.transform.position;
             posY.y = 0;
             Vector3 target = transform.position;
@@ -228,13 +229,12 @@ public class MorphedCylinder : MonoBehaviour
 
             Vector3 pos = go.transform.position;
 
-            float angle = 0f;
-            for (int i = 0; i < (layers+ (layers / 3) - 1); i++)
+            for (int i = 0; i < (layers + (layers / 3) - 1); i++)
             {
                 float y = 0;
                 if (i > layers)
                 {
-                    y = (float)(layers - (i - layers)) / (float)(layers - 1) * height;
+                    y = (float)(layers - ((i - 1) - layers)) / (float)(layers - 1) * height;
                 }
                 else
                 {
@@ -245,9 +245,9 @@ public class MorphedCylinder : MonoBehaviour
                 Vector3 yVWorldPos = transform.TransformPoint(yV);
 
 
-                if (Mathf.Abs(yVWorldPos.y - pos.y) > go.interactionRadius)
+
+                if (Mathf.Abs(pos.y - yVWorldPos.y) > go.interactionRadius)
                 {
-                    angle += angleStep * segments;
                     continue;
                 }
 
@@ -256,9 +256,9 @@ public class MorphedCylinder : MonoBehaviour
                 {
                     int vertexIndex = i * segments + j;
                     Vector3 vertPos = vertices[vertexIndex];
-
                     float vradius = verticesRadius[vertexIndex];
-                    if (vertexIndex > layers)
+
+                    if (i > layers)
                     {
                         //int friendI = (layers * segments) - (vertexIndex - (layers * segments));
                         //Debug.Log(friendI + " " + layers + " " + vertexIndex);  
@@ -267,10 +267,15 @@ public class MorphedCylinder : MonoBehaviour
                     }
                     else
                     {
+                      
+
                         Vector3 vertWorldPos = transform.TransformPoint(vertPos);
-
-
                         float force = Vector3.Magnitude(vertWorldPos - pos);
+
+                          if (i == layers / 2 && j == 0)
+                        {
+                            Debug.Log(force);
+                        }
 
                         if (force < go.interactionRadius)
                         {
@@ -278,32 +283,29 @@ public class MorphedCylinder : MonoBehaviour
 
                             vradius -= 0.1f * Time.deltaTime * morphForce * realForce;
                         }
-                        else
-                        {
 
-                            vertexIndex++;
-                            angle += angleStep;
-                            continue;
-                        }
+
                         if (vradius <= radius * 0.1f)
                         {
                             vradius = radius * 0.1f;
                         }
 
                     }
-                    float x = Mathf.Cos(angle) * vradius;
-                    float z = Mathf.Sin(angle) * vradius;
+
+                    float x = cos[j] * vradius;
+                    float z = sin[j] * vradius;
+
+
 
                     verticesRadius[vertexIndex] = vradius;
                     vertices[vertexIndex] = new Vector3(x, vertPos.y, z);
+
                     if (debug)
                     {
                         verts[vertexIndex].transform.localPosition = vertices[vertexIndex];
                     }
                     //normals[vertexIndex] = new Vector3(x, 0f, z).normalized;
 
-                    vertexIndex++;
-                    angle += angleStep;
                 }
             }
         }
