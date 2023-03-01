@@ -412,7 +412,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1007543900}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac50e643b99600049a3dfe329601f75f, type: 3}
   m_Name: 
@@ -734,13 +734,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoRotate: 0
-  rotSpeed: 1
+  rotFactor: 1
   morphForce: 500
-  segments: 150
-  layers: 100
+  segments: 300
+  layers: 200
   radius: 0.1
+  insideRadius: 0.09
   height: 0.3
   startMesh: {fileID: -2124705421725058983, guid: 8d2f40d6cefd68e4db881db113add0bb, type: 3}
+  meshMaterial: {fileID: 2100000, guid: fd97d574df916204c93263a344c0f1eb, type: 2}
   morphers:
   - {fileID: 1082140411}
   - {fileID: 704912646}
@@ -966,6 +968,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 8d2f40d6cefd68e4db881db113add0bb, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 38a093d1e36270f43987e74c5afd6c1d, type: 2}
     - target: {fileID: 919132149155446097, guid: 8d2f40d6cefd68e4db881db113add0bb, type: 3}
       propertyPath: m_Name
       value: issoaqui
@@ -1028,7 +1034,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1777116806894256
 GameObject:
   m_ObjectHideFlags: 0
@@ -1045,7 +1051,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1928008015085922
 GameObject:
   m_ObjectHideFlags: 0
@@ -3265,8 +3271,8 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 0.5
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 8.99
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208

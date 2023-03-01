@@ -5,15 +5,16 @@ using UnityEngine;
 public class MorphedCylinder : MonoBehaviour
 {
     public bool autoRotate = false;
-    public float rotSpeed = 1.0f;
+    public float rotFactor = 1.0f;
     public float morphForce = 1.0f;
     public int segments = 16;
     public int layers = 3;
     public float radius = 1f;
+    public float insideRadius = 1f;
     public float height = 2f;
 
     public Mesh startMesh;
-
+    public Material meshMaterial;
     public Morpher[] morphers;
 
     public GameObject vert;
@@ -27,28 +28,28 @@ public class MorphedCylinder : MonoBehaviour
     public float rotateSpeed = 1.0f;
 
     public GameObject[] verts;
-
+    float [] cos;
+    float [] sin;
 
     bool debug = false;
     void DoTriangles()
     {
-        int triangleIndex = 0;
-        for (int i = 0; i < layers - 1; i++)
+        for (int i = 0; i < (layers+ (layers / 3)) - 1; i++)
         {
             for (int j = 0; j < segments; j++)
             {
-                int i1 = i * (segments + 1) + j;
-                int i2 = i * (segments + 1) + j + 1;
-                int i3 = (i + 1) * (segments + 1) + j;
-                int i4 = (i + 1) * (segments + 1) + j + 1;
+                int triangleIndex = i * segments * 6 + j * 6;
+                int i1 = i * (segments) + j;
+                int i2 = i * (segments) + j + 1;
+                int i3 = (i + 1) * (segments) + j;
+                int i4 = (i + 1) * (segments) + j + 1;
+                triangles[triangleIndex] = i1;
+                triangles[triangleIndex+1] = i3;
+                triangles[triangleIndex+2] = i2;
 
-                triangles[triangleIndex++] = i1;
-                triangles[triangleIndex++] = i3;
-                triangles[triangleIndex++] = i2;
-
-                triangles[triangleIndex++] = i2;
-                triangles[triangleIndex++] = i3;
-                triangles[triangleIndex++] = i4;
+                triangles[triangleIndex+3] = i2;
+                triangles[triangleIndex+4] = i3;
+                triangles[triangleIndex+5] = i4;
             }
         }
     }
@@ -71,10 +72,10 @@ public class MorphedCylinder : MonoBehaviour
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
 
-        int numVertices = (segments + 1) * layers;
+        int numVertices = (segments + 1) * (layers+ (layers / 3));
         vertices = new Vector3[numVertices];
         normals = new Vector3[numVertices];
-        triangles = new int[segments * layers * 6];
+        triangles = new int[segments * (layers+ (layers / 3)) * 6];
 
         verticesRadius = new float[numVertices];
         if (debug)
@@ -83,68 +84,124 @@ public class MorphedCylinder : MonoBehaviour
         }
 
         float angleStep = 2f * Mathf.PI / segments;
-        float angle = 0f;
-        int vertexIndex = 0;
-        for (int i = 0; i < layers; i++)
+        cos = new float[segments + 1];
+        sin = new float[segments + 1];
+        for (int j = 0; j <= segments; j++)
         {
-            float y = (float)i / (float)(layers - 1) * height;
+           cos[j] = Mathf.Cos(j * angleStep);  
+           sin[j] = Mathf.Sin(j * angleStep);
+        }
+
+        for (int i = 0; i < layers+ (layers / 3); i++)
+        {
+                
+            float thick_radius = 1.0f;
+            float y = 0;
+            if (i > layers)
+            {
+                y = (float)(layers - ((i - 1 ) - layers)) / (float)(layers - 1) * height;
+                thick_radius = insideRadius;
+            }
+            else
+            {
+                thick_radius = radius;
+                y = (float)i / (float)(layers - 1) * height;
+            }
 
             for (int j = 0; j <= segments; j++)
             {
-                float x = Mathf.Cos(angle) * radius;
-                float z = Mathf.Sin(angle) * radius;
-
+                int vertexIndex = i * segments + j;
+                float x = cos[j] * thick_radius;
+                float z = sin[j] * thick_radius;
                 vertices[vertexIndex] = new Vector3(x, y, z);
-                normals[vertexIndex] = new Vector3(x, 0f, z).normalized;
-                verticesRadius[vertexIndex] = radius;
+                normals[vertexIndex] = (i > layers ? -1 : 1) * new Vector3(x, 0f, z).normalized;
+                verticesRadius[vertexIndex] = thick_radius;
 
-                if (debug)
+                if (j == 0)
                 {
-                    GameObject oo = Instantiate(i == 15 && j == 0 ? vert2 : vert, new Vector3(0, 0, 0), Quaternion.identity);
+                    GameObject oo = Instantiate(vert, new Vector3(0, 0, 0), Quaternion.identity);
                     oo.transform.parent = this.transform;
                     oo.transform.localPosition = vertices[vertexIndex];
-
+                    oo.name = " " + vertexIndex;
                     if (i == 15 && j == 0)
                     {
-                        Debug.Log("created" + vertexIndex + " " + oo.transform.localPosition);
+                        //Debug.Log("created" + vertexIndex + " " + oo.transform.localPosition);
                     }
-                    verts[vertexIndex] = oo;
+                    //verts[vertexIndex] = oo;
                 }
-                vertexIndex++;
-                angle += angleStep;
             }
         }
+
     }
 
     void Start()
     {
+        Debug.Log("-.s" + startMesh.vertices.Length);
+
         GenerateInit();
         DoTriangles();
+
+        /*
+                mesh = new Mesh();
+
+                GetComponent<MeshFilter>().mesh = mesh;
+                vertices = (Vector3[])startMesh.vertices.Clone();
+                normals = (Vector3[])startMesh.normals.Clone();
+                triangles = (int[])startMesh.triangles.Clone();
+                transform.localScale = Vector3.one * 10;
+                transform.localPosition = Vector3.zero;
+                transform.localEulerAngles = new Vector3(-90.0f, 0, 0);
+                verticesRadius = new float[vertices.Length];
+                int i = 0;
+                foreach (Vector3 vertI in vertices)
+                {
+
+                    Vector3 yVWorldPos = transform.TransformPoint(vertI);
+                    float rad = Mathf.Atan2(yVWorldPos.y, yVWorldPos.x);
+                    verticesRadius[i] = rad;
+                    i++;
+
+                    //if (i < 500 || i > 19000)
+                    //{
+                    //    GameObject oo = Instantiate( i < 500 ? vert2 : vert, new Vector3(0, 0, 0), Quaternion.identity);
+                    //    oo.transform.parent = this.transform;
+                    //    oo.transform.localPosition = vertices[i];
+                    //    oo.name = i + " o " + rad;
+                    //}
+                }
+        */
         Apply();
+
+        MeshRenderer renderer = GetComponent<MeshRenderer>();
+        renderer.material = meshMaterial;
+
 
     }
 
     public float anim = 1.0f;
-    
+
     void FixedUpdate()
     {
-        if (Time.time <= 1.0f)
+        return;
+        if (Time.time <= 2.0f)
         {
             return;
         }
 
-        if(autoRotate) {
+        if (autoRotate)
+        {
             transform.Rotate(new Vector3(0, rotateSpeed, 0));
-        } else {
-            anim += Time.deltaTime;
-            float  offset = Time.deltaTime * PhidgetsController.Instance.M_Position  / PhidgetsController.Instance.M_DataInterval;
-         
-            transform.Rotate(new Vector3(0, offset, 0));
-            Debug.Log(Time.deltaTime + " " + PhidgetsController.Instance.M_Position + " " +PhidgetsController.Instance.M_DataInterval);
         }
-
-        
-
+        else
+        {
+            if (PhidgetsController.Instance)
+            {
+                anim += Time.deltaTime;
+                float offset = Time.deltaTime * (PhidgetsController.Instance.M_Position / rotFactor) / PhidgetsController.Instance.M_DataInterval;
+                transform.Rotate(new Vector3(0, offset, 0));
+            }
+            //Debug.Log(Time.deltaTime + " " + PhidgetsController.Instance.M_Position + " " +PhidgetsController.Instance.M_DataInterval);
+        }
 
         if (morphers.Length == 0)
         {
@@ -154,6 +211,9 @@ public class MorphedCylinder : MonoBehaviour
         float angleStep = 2f * Mathf.PI / segments;
         foreach (Morpher go in morphers)
         {
+            if(!go.enabled) {
+                continue;
+            }
             Vector3 posY = go.transform.position;
             posY.y = 0;
             Vector3 target = transform.position;
@@ -167,18 +227,26 @@ public class MorphedCylinder : MonoBehaviour
             }
 
             Vector3 pos = go.transform.position;
-            int vertexIndex = 0;
+
             float angle = 0f;
-            for (int i = 0; i < layers; i++)
+            for (int i = 0; i < (layers+ (layers / 3) - 1); i++)
             {
-                float y = (float)i / (float)(layers - 1) * height;
+                float y = 0;
+                if (i > layers)
+                {
+                    y = (float)(layers - (i - layers)) / (float)(layers - 1) * height;
+                }
+                else
+                {
+                    y = (float)i / (float)(layers - 1) * height;
+                }
+
                 Vector3 yV = new Vector3(0, y, 0);
                 Vector3 yVWorldPos = transform.TransformPoint(yV);
 
 
                 if (Mathf.Abs(yVWorldPos.y - pos.y) > go.interactionRadius)
                 {
-                    vertexIndex += segments;
                     angle += angleStep * segments;
                     continue;
                 }
@@ -186,33 +254,43 @@ public class MorphedCylinder : MonoBehaviour
 
                 for (int j = 0; j <= segments; j++)
                 {
+                    int vertexIndex = i * segments + j;
                     Vector3 vertPos = vertices[vertexIndex];
 
                     float vradius = verticesRadius[vertexIndex];
-
-                    Vector3 vertWorldPos = transform.TransformPoint(vertPos);
-
-
-                    float force = Vector3.Magnitude(vertWorldPos - pos);
-
-                    if (force < go.interactionRadius)
+                    if (vertexIndex > layers)
                     {
-                        float realForce = (go.interactionRadius - force);
-
-                        vradius -= 0.1f * Time.deltaTime * morphForce * realForce;
+                        //int friendI = (layers * segments) - (vertexIndex - (layers * segments));
+                        //Debug.Log(friendI + " " + layers + " " + vertexIndex);  
+                        //float vradius2 = verticesRadius[friendI];
+                        //vradius = vradius2 - (radius - insideRadius);
                     }
                     else
                     {
+                        Vector3 vertWorldPos = transform.TransformPoint(vertPos);
 
-                        vertexIndex++;
-                        angle += angleStep;
-                        continue;
-                    }
-                    if (vradius <= radius * 0.1f)
-                    {
-                        vradius = radius * 0.1f;
-                    }
 
+                        float force = Vector3.Magnitude(vertWorldPos - pos);
+
+                        if (force < go.interactionRadius)
+                        {
+                            float realForce = (go.interactionRadius - force);
+
+                            vradius -= 0.1f * Time.deltaTime * morphForce * realForce;
+                        }
+                        else
+                        {
+
+                            vertexIndex++;
+                            angle += angleStep;
+                            continue;
+                        }
+                        if (vradius <= radius * 0.1f)
+                        {
+                            vradius = radius * 0.1f;
+                        }
+
+                    }
                     float x = Mathf.Cos(angle) * vradius;
                     float z = Mathf.Sin(angle) * vradius;
 
