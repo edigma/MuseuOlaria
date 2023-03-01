@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MorphedCylinder : MonoBehaviour
 {
+    public bool autoRotate = false;
+    public float rotSpeed = 1.0f;
     public float morphForce = 1.0f;
     public int segments = 16;
     public int layers = 3;
@@ -123,18 +125,25 @@ public class MorphedCylinder : MonoBehaviour
     }
 
     public float anim = 1.0f;
-
+    
     void FixedUpdate()
     {
-
-        if (Time.time <= 5.0f)
+        if (Time.time <= 1.0f)
         {
             return;
-
         }
-        transform.Rotate(new Vector3(0, rotateSpeed, 0));
 
-        anim += Time.deltaTime * 5;
+        if(autoRotate) {
+            transform.Rotate(new Vector3(0, rotateSpeed, 0));
+        } else {
+            anim += Time.deltaTime;
+            float  offset = Time.deltaTime * PhidgetsController.Instance.M_Position  / PhidgetsController.Instance.M_DataInterval;
+         
+            transform.Rotate(new Vector3(0, offset, 0));
+            Debug.Log(Time.deltaTime + " " + PhidgetsController.Instance.M_Position + " " +PhidgetsController.Instance.M_DataInterval);
+        }
+
+        
 
 
         if (morphers.Length == 0)
