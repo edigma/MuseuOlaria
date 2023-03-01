@@ -122,7 +122,7 @@ public class MorphedCylinder : MonoBehaviour
                     GameObject oo = Instantiate(vert, new Vector3(0, 0, 0), Quaternion.identity);
                     oo.transform.parent = this.transform;
                     oo.transform.localPosition = vertices[vertexIndex];
-                    oo.name = " " + vertexIndex + " " + y;
+                    oo.name = " " + vertexIndex;
                     if (i == 15 && j == 0)
                     {
                         //Debug.Log("created" + vertexIndex + " " + oo.transform.localPosition);
@@ -260,22 +260,16 @@ public class MorphedCylinder : MonoBehaviour
 
                     if (i > layers)
                     {
-                        //int friendI = (layers * segments) - (vertexIndex - (layers * segments));
-                        //Debug.Log(friendI + " " + layers + " " + vertexIndex);  
-                        //float vradius2 = verticesRadius[friendI];
-                        //vradius = vradius2 - (radius - insideRadius);
+                        int friendI = layers - (i - layers);
+                        int friendVertexIndex = friendI * segments + j;
+
+                        float vradius2 = verticesRadius[friendVertexIndex];
+                        vradius = vradius2 - (radius - insideRadius);
                     }
                     else
                     {
-                      
-
                         Vector3 vertWorldPos = transform.TransformPoint(vertPos);
                         float force = Vector3.Magnitude(vertWorldPos - pos);
-
-                          if (i == layers / 2 && j == 0)
-                        {
-                            Debug.Log(force);
-                        }
 
                         if (force < go.interactionRadius)
                         {
