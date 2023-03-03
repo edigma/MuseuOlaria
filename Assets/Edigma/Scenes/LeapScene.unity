@@ -412,7 +412,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1007543900}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac50e643b99600049a3dfe329601f75f, type: 3}
   m_Name: 
@@ -733,11 +733,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e4ee2c2254ea59438dfffcc37b468f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  extrude: 0
   autoRotate: 1
   rotFactor: 1
   morphForce: 500
-  segments: 300
-  layers: 150
+  segments: 50
+  layers: 50
   radius: 0.1
   insideRadius: 0.09
   height: 0.3
@@ -752,6 +753,7 @@ MonoBehaviour:
   vert2: {fileID: 1082140406}
   rotateSpeed: 5
   verts: []
+  debug: 0
   anim: 1
 --- !u!1 &1579231744
 GameObject:
