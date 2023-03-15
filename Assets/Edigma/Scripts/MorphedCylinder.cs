@@ -54,6 +54,17 @@ public class MorphedCylinder : MonoBehaviour
         }
     }
 
+    public float CalculateForce(Vector3 staticPos, Vector3 movablePos, float R)
+    {
+        float distanceSquared = (movablePos - staticPos).sqrMagnitude;
+        if (distanceSquared > R * R)
+        {
+            return 0f;
+        }
+        float force = 1f - (distanceSquared / (R * R));
+        return Mathf.Clamp01(force);
+    }
+
     void Apply()
     {
         mesh.vertices = vertices;
@@ -206,8 +217,6 @@ public class MorphedCylinder : MonoBehaviour
                 Vector3 yV = new Vector3(0, y, 0);
                 Vector3 yVWorldPos = transform.TransformPoint(yV);
 
-
-
                 if (Mathf.Abs(pos.y - yVWorldPos.y) > go.interactionRadius)
                 {
                     continue;
@@ -231,21 +240,24 @@ public class MorphedCylinder : MonoBehaviour
                     else
                     {
                         Vector3 vertWorldPos = transform.TransformPoint(vertPos);
-                        float force = Vector3.Magnitude(vertWorldPos - pos);
-/*
-                        if (force < go.interactionRadius)
-                        {
-                            if (dist > vradius)
-                            {
-                                vradius -= 0.05f * Time.deltaTime;
-                            }
-                            else
-                            {
-                                vradius -= 0.05f * Time.deltaTime;
-                            }
-                        }
 
-*/
+                        float force = CalculateForce(vertWorldPos, pos, go.interactionRadius);
+
+                        //float force = Vector3.Magnitude(vertWorldPos - pos);
+                        /*
+                                                if (force < go.interactionRadius)
+                                                {
+                                                    if (dist > vradius)
+                                                    {
+                                                        vradius -= 0.05f * Time.deltaTime;
+                                                    }
+                                                    else
+                                                    {
+                                                        vradius -= 0.05f * Time.deltaTime;
+                                                    }
+                                                }
+
+                        */
 
                         if (extrude)
                         {
@@ -258,13 +270,9 @@ public class MorphedCylinder : MonoBehaviour
                         }
                         else
                         {
-                            if (force < go.interactionRadius)
-                            {
-                                float realForce = (go.interactionRadius - force);
-                                vradius -= 0.1f * Time.deltaTime * morphForce * realForce;
-                            }
+                            vradius -= 0.1f * Time.deltaTime * morphForce * force;
                         }
-                        
+
 
                         if (vradius <= radius * 0.1f)
                         {
@@ -292,7 +300,8 @@ public class MorphedCylinder : MonoBehaviour
                 }
             }
         }
-
         ApplyVerts();
+        mesh.RecalculateBounds();
+        mesh.RecalculateNormals();
     }
 }
