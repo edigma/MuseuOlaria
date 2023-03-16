@@ -68,6 +68,7 @@ public class UIController : MonoBehaviour
                 lastR.Off();
                 lastL = null;
             }
+            doneTime = 0.0f;
         }
         else
         {
@@ -75,15 +76,19 @@ public class UIController : MonoBehaviour
             {
                 if (lL == lastL)
                 {
-
+                    doneTime += Time.deltaTime;
+                } else {
+                    doneTime = 0.0f;
                 }
-                lL.On();
+                lL.On(); 
+
                 lastL = lL;
             }
             else
             {
                 if (lastL)
                 {
+                    doneTime = 0.0f;
                     lastL.Off();
                 }
                 lastL = null;
@@ -92,7 +97,9 @@ public class UIController : MonoBehaviour
             {
                 if (lR == lastR)
                 {
-
+                    doneTime += Time.deltaTime;
+                } else {
+                    doneTime = 0.0f;
                 }
                 lR.On();
                 lastR = lR;
@@ -101,6 +108,7 @@ public class UIController : MonoBehaviour
             {
                 if (lastR)
                 {
+                    doneTime = 0.0f;
                     lastR.Off();
                 }
                 lastR = null;
@@ -108,16 +116,18 @@ public class UIController : MonoBehaviour
 
             if(!lastL && !lastR) {
                 doneTime = 0.0f;
-            } else {
-                doneTime += Time.deltaTime;
+            } 
+
+            if(lastL) {
+                lastL.Progress(doneTime / selectiontime);
+            }
+            if(lastR) {
+                lastR.Progress(doneTime / selectiontime);
             }
 
             if(doneTime >= selectiontime) {
-                Debug.Log("Selected " + lastL + " - " + lastR);
                 doneTime = 0.0f;
             }
-
-            
         }
     }
 
