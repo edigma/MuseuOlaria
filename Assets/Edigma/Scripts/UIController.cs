@@ -16,6 +16,8 @@ public class UIController : MonoBehaviour
     public float timeout = 10.0f;
     float lastInteraction = 0f;
     float doneTime = 0.0f;
+    LeapButton lastR = null;
+    LeapButton lastL = null;
 
     public GameObject introScreen;
     public GameObject inGame;
@@ -33,8 +35,7 @@ public class UIController : MonoBehaviour
         }
     }
 
-    LeapButton lastR = null;
-    LeapButton lastL = null;
+
     // Update is called once per frame
     void Update()
     {
@@ -43,7 +44,28 @@ public class UIController : MonoBehaviour
         LeapButton lR = null;
         LeapButton lL = null;
 
-        if (handL.gameObject.activeSelf)
+        if (!handL.gameObject.activeInHierarchy && !handR.gameObject.activeInHierarchy)
+        {
+            lastInteraction += Time.deltaTime;
+            if (lastInteraction >= timeout)
+            {
+                RestartMesh();
+                Home();
+            }
+            if (lastL)
+            {
+                lastL.Off();
+            }
+            if (lastR)
+            {
+                lastR.Off();
+            }
+            return;
+        }
+
+        lastInteraction = 0.0f;
+
+        if (handL.gameObject.activeInHierarchy)
         {
             Vector3 dir = handL.transform.position - Camera.main.transform.position;
             if (Physics.Raycast(Camera.main.transform.position, dir, out hit, Mathf.Infinity, layerMask))
@@ -51,14 +73,32 @@ public class UIController : MonoBehaviour
                 lL = hit.transform.gameObject.GetComponent<LeapButton>();
             }
         }
+        else
+        {
+            if (lastL)
+            {
+                lastL.Off();
+            }
+            lL = null;
+            lastL = null;
+        }
 
-        if (handR.gameObject.activeSelf)
+        if (handR.gameObject.activeInHierarchy)
         {
             Vector3 dir = handR.transform.position - Camera.main.transform.position;
             if (Physics.Raycast(Camera.main.transform.position, dir, out hit, Mathf.Infinity, layerMask))
             {
                 lR = hit.transform.gameObject.GetComponent<LeapButton>();
             }
+        }
+        else
+        {
+            if (lastR)
+            {
+                lastL.Off();
+            }
+            lR = null;
+            lastR = null;
         }
 
         if (lL && lR)
@@ -154,16 +194,18 @@ public class UIController : MonoBehaviour
     }
 
 
-IEnumerator MeshRestart() {
-    mContainer.gameObject.SetActive(false);
-    yield return new WaitForSeconds(0.5f);
-    mContainer.gameObject.SetActive(true);
-    yield return null;
-}
+    IEnumerator MeshRestart()
+    {
+        mContainer.gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
+        mContainer.gameObject.SetActive(true);
+        yield return null;
+    }
 
     public void Startinteraction()
     {
         mContainer.gameObject.SetActive(true);
+        mContainer.Reset();
         introScreen.SetActive(false);
         inGame.SetActive(true);
     }

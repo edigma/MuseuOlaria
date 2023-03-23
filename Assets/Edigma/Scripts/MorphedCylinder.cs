@@ -143,6 +143,7 @@ public class MorphedCylinder : MonoBehaviour
 
     public void Reset()
     {
+        startTime = .0f;
         GenerateInit();
         DoTriangles();
         Apply();
