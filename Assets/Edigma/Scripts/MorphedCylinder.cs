@@ -139,10 +139,9 @@ public class MorphedCylinder : MonoBehaviour
                 }
             }
         }
-
     }
 
-    void Start()
+    public void Reset()
     {
         GenerateInit();
         DoTriangles();
@@ -151,11 +150,17 @@ public class MorphedCylinder : MonoBehaviour
         renderer.material = meshMaterial;
     }
 
-    public float anim = 1.0f;
+    void Start()
+    {
+        Reset();
+    }
 
+    public float anim = 1.0f;
+    public float startTime = 0.0f;
     void FixedUpdate()
     {
-        if (Time.time <= 2.0f)
+        startTime += Time.deltaTime;
+        if (startTime <= 2.0f)
         {
             return;
         }

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.UI;
+
 public class UIController : MonoBehaviour
 {
     public static UIController Instance = null;
@@ -14,6 +16,10 @@ public class UIController : MonoBehaviour
     public float timeout = 10.0f;
     float lastInteraction = 0f;
     float doneTime = 0.0f;
+
+    public GameObject introScreen;
+    public GameObject inGame;
+    public MorphContainer mContainer;
 
     void Start()
     {
@@ -77,10 +83,12 @@ public class UIController : MonoBehaviour
                 if (lL == lastL)
                 {
                     doneTime += Time.deltaTime;
-                } else {
+                }
+                else
+                {
                     doneTime = 0.0f;
                 }
-                lL.On(); 
+                lL.On();
 
                 lastL = lL;
             }
@@ -98,7 +106,9 @@ public class UIController : MonoBehaviour
                 if (lR == lastR)
                 {
                     doneTime += Time.deltaTime;
-                } else {
+                }
+                else
+                {
                     doneTime = 0.0f;
                 }
                 lR.On();
@@ -114,21 +124,65 @@ public class UIController : MonoBehaviour
                 lastR = null;
             }
 
-            if(!lastL && !lastR) {
+            if (!lastL && !lastR)
+            {
                 doneTime = 0.0f;
-            } 
+            }
 
-            if(lastL) {
+            if (lastL)
+            {
                 lastL.Progress(doneTime / selectiontime);
             }
-            if(lastR) {
+            if (lastR)
+            {
                 lastR.Progress(doneTime / selectiontime);
             }
 
-            if(doneTime >= selectiontime) {
+            if (doneTime >= selectiontime)
+            {
                 doneTime = 0.0f;
+                if (lastL)
+                {
+                    lastL.DoClick(); ;
+                }
+                if (lastR)
+                {
+                    lastR.DoClick(); ;
+                }
             }
         }
+    }
+
+
+IEnumerator MeshRestart() {
+    mContainer.gameObject.SetActive(false);
+    yield return new WaitForSeconds(0.5f);
+    mContainer.gameObject.SetActive(true);
+    yield return null;
+}
+
+    public void Startinteraction()
+    {
+        mContainer.gameObject.SetActive(true);
+        introScreen.SetActive(false);
+        inGame.SetActive(true);
+    }
+
+    public void RestartMesh()
+    {
+        mContainer.Reset();
+    }
+
+    public void Home()
+    {
+        mContainer.gameObject.SetActive(false);
+        introScreen.SetActive(true);
+        inGame.SetActive(false);
+    }
+
+    public void Language()
+    {
+        LanguageEN = !LanguageEN;
     }
 
 }
