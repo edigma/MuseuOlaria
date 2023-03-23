@@ -14,6 +14,10 @@ public class MorphedCylinder : MonoBehaviour
     public float insideRadius = 1f;
     public float height = 2f;
 
+    public float heightSpeed = .5f;
+    public float heightScale = .1f;
+    float currentHeightScale = .0f;
+    public float maxHeightScale = 1.2f;
     public Mesh startMesh;
     public Material meshMaterial;
     public Morpher[] morphers;
@@ -28,14 +32,20 @@ public class MorphedCylinder : MonoBehaviour
     //public float interactionRadius = .5f;
     public float rotateSpeed = 1.0f;
 
-    public GameObject[] verts;
+
+    GameObject[] verts;
     float[] cos;
     float[] sin;
 
     public bool debug = false;
+
+    public bool sizeUp = false;
+    public bool sizeDown = false;
+    public bool expand = false;
+
     void DoTriangles()
     {
-        for (int i = 0; i < (layers + (layers / 3)) - 1; i++)
+        for (int i = 0; i < (layers + (layers / 1)) - 1; i++)
         {
             for (int j = 0; j < segments; j++)
             {
@@ -84,10 +94,10 @@ public class MorphedCylinder : MonoBehaviour
         mesh.indexFormat = IndexFormat.UInt32;
         GetComponent<MeshFilter>().mesh = mesh;
 
-        int numVertices = (segments + 1) * (layers + (layers / 3));
+        int numVertices = (segments + 1) * (layers + (layers / 1));
         vertices = new Vector3[numVertices];
         normals = new Vector3[numVertices];
-        triangles = new int[segments * (layers + (layers / 3)) * 6];
+        triangles = new int[segments * (layers + (layers / 1)) * 6];
 
         verticesRadius = new float[numVertices];
         if (debug)
@@ -104,7 +114,7 @@ public class MorphedCylinder : MonoBehaviour
             sin[j] = Mathf.Sin(j * angleStep);
         }
 
-        for (int i = 0; i < layers + (layers / 3); i++)
+        for (int i = 0; i < layers + (layers / 1); i++)
         {
 
             float thick_radius = 1.0f;
@@ -143,6 +153,7 @@ public class MorphedCylinder : MonoBehaviour
 
     public void Reset()
     {
+        currentHeightScale = heightScale;
         startTime = .0f;
         GenerateInit();
         DoTriangles();
@@ -158,8 +169,12 @@ public class MorphedCylinder : MonoBehaviour
 
     public float anim = 1.0f;
     public float startTime = 0.0f;
+
     void FixedUpdate()
     {
+
+        transform.localScale = new Vector3(1, currentHeightScale, 1);
+
         startTime += Time.deltaTime;
         if (startTime <= 2.0f)
         {
@@ -199,6 +214,8 @@ public class MorphedCylinder : MonoBehaviour
             Vector3 target = transform.position;
             target.y = 0;
 
+
+
             float dist = Vector3.Magnitude(target - posY);
 
             if (dist > radius * 2.5f)
@@ -208,7 +225,7 @@ public class MorphedCylinder : MonoBehaviour
 
             Vector3 pos = go.transform.position;
 
-            for (int i = 0; i < (layers + (layers / 3)); i++)
+            for (int i = 0; i < (layers + (layers / 1)); i++)
             {
                 float y = 0;
                 if (i > layers)
@@ -226,6 +243,34 @@ public class MorphedCylinder : MonoBehaviour
                 if (Mathf.Abs(pos.y - yVWorldPos.y) > go.interactionRadius)
                 {
                     continue;
+                }
+
+
+                if (i == layers)
+                {
+                    if (sizeUp)
+                    {
+                        if (pos.y > yVWorldPos.y)
+                        {
+                            currentHeightScale += heightSpeed * Time.deltaTime;
+                            if (currentHeightScale >= maxHeightScale)
+                            {
+                                currentHeightScale = maxHeightScale;
+                            }
+                        }
+                    }
+
+                    if (sizeDown && Mathf.Abs(pos.y - yVWorldPos.y) > go.interactionRadius / 2)
+                    {
+                        if (pos.y < yVWorldPos.y)
+                        {
+                            currentHeightScale -= heightSpeed * Time.deltaTime;
+                            if (currentHeightScale <= heightScale)
+                            {
+                                currentHeightScale = heightScale;
+                            }
+                        }
+                    }
                 }
 
 
