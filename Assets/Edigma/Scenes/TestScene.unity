@@ -1043,8 +1043,10 @@ MonoBehaviour:
   vert: {fileID: 9172801937621500986, guid: c5f267686789d6449a119dc3df875b56, type: 3}
   vert2: {fileID: 1082140406}
   rotateSpeed: 5
-  verts: []
   debug: 0
+  sizeUp: 0
+  sizeDown: 0
+  expand: 0
   anim: 1
   startTime: 0
 --- !u!1 &1579231744

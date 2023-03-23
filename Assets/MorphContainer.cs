@@ -21,4 +21,14 @@ public class MorphContainer : MonoBehaviour
     {
         
     }
+
+    public void SizeUp() {
+        cylinder.sizeDown = false;
+        cylinder.sizeUp = true;
+    }
+
+    public void SizeDown() {
+        cylinder.sizeDown = true;
+        cylinder.sizeUp = false;
+    }
 }

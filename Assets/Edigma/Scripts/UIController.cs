@@ -227,4 +227,16 @@ public class UIController : MonoBehaviour
         LanguageEN = !LanguageEN;
     }
 
+    public void SizeUp() {
+        mContainer.SizeUp();
+    }
+
+    public void SizeDown() {
+        mContainer.SizeDown();
+    }
+
+    public void NoSize() {
+        
+    }
+
 }
