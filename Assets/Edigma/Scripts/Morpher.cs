@@ -6,6 +6,7 @@ public class Morpher : MonoBehaviour
 {
     // Start is called before the first frame update
     public float interactionRadius = 1.0f;
+    public bool mainMorpher = false;
     void Start()
     {
         

@@ -116,7 +116,6 @@ public class MorphedCylinder : MonoBehaviour
 
         for (int i = 0; i < layers + (layers / 1); i++)
         {
-
             float thick_radius = 1.0f;
             float y = 0;
             if (i > layers)
@@ -245,34 +244,36 @@ public class MorphedCylinder : MonoBehaviour
                     continue;
                 }
 
-
-                if (i == layers)
+                if (go.mainMorpher)
                 {
-                    if (sizeUp)
+                    if (i == layers)
                     {
-                        if (pos.y > yVWorldPos.y)
+                        Debug.Log(go.transform.up);
+                        if (sizeUp)
                         {
-                            currentHeightScale += heightSpeed * Time.deltaTime;
-                            if (currentHeightScale >= maxHeightScale)
+                            if (pos.y > yVWorldPos.y)
                             {
-                                currentHeightScale = maxHeightScale;
+                                currentHeightScale += heightSpeed * Time.deltaTime;
+                                if (currentHeightScale >= maxHeightScale)
+                                {
+                                    currentHeightScale = maxHeightScale;
+                                }
                             }
                         }
-                    }
 
-                    if (sizeDown && Mathf.Abs(pos.y - yVWorldPos.y) > go.interactionRadius / 2)
-                    {
-                        if (pos.y < yVWorldPos.y)
+                        if (sizeDown && Mathf.Abs(pos.y - yVWorldPos.y) > go.interactionRadius / 2)
                         {
-                            currentHeightScale -= heightSpeed * Time.deltaTime;
-                            if (currentHeightScale <= heightScale)
+                            if (pos.y < yVWorldPos.y)
                             {
-                                currentHeightScale = heightScale;
+                                currentHeightScale -= heightSpeed * Time.deltaTime;
+                                if (currentHeightScale <= heightScale)
+                                {
+                                    currentHeightScale = heightScale;
+                                }
                             }
                         }
                     }
                 }
-
 
                 for (int j = 0; j <= (segments); j++)
                 {
