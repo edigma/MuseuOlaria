@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 public class MorphedCylinder : MonoBehaviour
 {
-    public bool extrude = false;
+    //public bool extrude = false;
     public bool autoRotate = false;
     public float rotFactor = 1.0f;
     public float morphForce = 1.0f;
@@ -216,6 +216,19 @@ public class MorphedCylinder : MonoBehaviour
 
             bool handIsUp = go.mainMorpher && go.transform.up.y < -0.5f;
             bool handIsDown = go.mainMorpher && go.transform.up.y > 0.5f;
+            bool extrude = false;
+
+            if(go.mainMorpher && !handIsDown && !handIsUp) {
+                if(target.x > posY.x) {
+                    extrude = go.transform.up.x > .5f;
+                } else {
+                    extrude = go.transform.up.x < -.5f;
+                }
+
+               // Debug.Log(extrude + " " + (target.x - posY.x) + " " + go.transform.up.x);
+
+            }
+
             float dist = Vector3.Magnitude(target - posY);
 
             if (dist > radius * 2.5f)
@@ -298,22 +311,6 @@ public class MorphedCylinder : MonoBehaviour
 
                         float force = CalculateForce(vertWorldPos, pos, go.interactionRadius);
 
-                        //float force = Vector3.Magnitude(vertWorldPos - pos);
-                        /*
-                                                if (force < go.interactionRadius)
-                                                {
-                                                    if (dist > vradius)
-                                                    {
-                                                        vradius -= 0.05f * Time.deltaTime;
-                                                    }
-                                                    else
-                                                    {
-                                                        vradius -= 0.05f * Time.deltaTime;
-                                                    }
-                                                }
-
-                        */
-
                         if (extrude)
                         {
                             if (force < vradius)
@@ -334,9 +331,9 @@ public class MorphedCylinder : MonoBehaviour
                             vradius = radius * 0.1f;
                         }
 
-                        if (vradius >= radius * 1.1f)
+                        if (vradius >= radius * 1.3f)
                         {
-                            vradius = radius * 1.1f;
+                            vradius = radius * 1.3f;
                         }
                     }
 
