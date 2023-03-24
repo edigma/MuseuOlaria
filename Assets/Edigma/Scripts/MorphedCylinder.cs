@@ -291,7 +291,7 @@ public class MorphedCylinder : MonoBehaviour
                     }
                 }
 
-                for (int j = 0; j <= (segments); j++)
+                for (int j = 0; j <= (segments - 1); j++)
                 {
                     int vertexIndex = i * segments + j;
                     Vector3 vertPos = vertices[vertexIndex];
