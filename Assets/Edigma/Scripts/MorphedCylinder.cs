@@ -203,7 +203,7 @@ public class MorphedCylinder : MonoBehaviour
         float angleStep = 2f * Mathf.PI / segments;
         foreach (Morpher go in morphers)
         {
-            if (!go.isActiveAndEnabled)
+            if (!go.isActiveAndEnabled || !go.gameObject.activeInHierarchy)
             {
                 continue;
             }
@@ -214,7 +214,8 @@ public class MorphedCylinder : MonoBehaviour
             target.y = 0;
 
 
-
+            bool handIsUp = go.mainMorpher && go.transform.up.y < -0.5f;
+            bool handIsDown = go.mainMorpher && go.transform.up.y > 0.5f;
             float dist = Vector3.Magnitude(target - posY);
 
             if (dist > radius * 2.5f)
@@ -244,12 +245,12 @@ public class MorphedCylinder : MonoBehaviour
                     continue;
                 }
 
-                if (go.mainMorpher)
+                if (handIsDown || handIsUp)
                 {
                     if (i == layers)
                     {
-                        Debug.Log(go.transform.up);
-                        if (sizeUp)
+                        
+                        if (handIsUp)
                         {
                             if (pos.y > yVWorldPos.y)
                             {
@@ -261,7 +262,7 @@ public class MorphedCylinder : MonoBehaviour
                             }
                         }
 
-                        if (sizeDown && Mathf.Abs(pos.y - yVWorldPos.y) > go.interactionRadius / 2)
+                        if (handIsDown && Mathf.Abs(pos.y - yVWorldPos.y) > go.interactionRadius / 2)
                         {
                             if (pos.y < yVWorldPos.y)
                             {
@@ -272,6 +273,8 @@ public class MorphedCylinder : MonoBehaviour
                                 }
                             }
                         }
+                    } else {
+                        continue;
                     }
                 }
 

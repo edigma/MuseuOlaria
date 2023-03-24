@@ -95,7 +95,7 @@ public class UIController : MonoBehaviour
         {
             if (lastR)
             {
-                lastL.Off();
+                lastR.Off();
             }
             lR = null;
             lastR = null;
