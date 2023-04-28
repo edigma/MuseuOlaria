@@ -22,6 +22,8 @@ public class MorphedCylinder : MonoBehaviour
     public Material meshMaterial;
     public Morpher[] morphers;
 
+    bool finished = false;
+
     public GameObject vert;
     public GameObject vert2;
     Vector3[] vertices;
@@ -152,6 +154,7 @@ public class MorphedCylinder : MonoBehaviour
 
     public void Reset()
     {
+        finished = false;
         currentHeightScale = heightScale;
         startTime = .0f;
         GenerateInit();
@@ -159,6 +162,10 @@ public class MorphedCylinder : MonoBehaviour
         Apply();
         MeshRenderer renderer = GetComponent<MeshRenderer>();
         renderer.material = meshMaterial;
+    }
+
+    public void Stop() {
+        finished = true;
     }
 
     void Start()
@@ -172,6 +179,9 @@ public class MorphedCylinder : MonoBehaviour
     void FixedUpdate()
     {
 
+if(finished) {
+    return;
+}
         transform.localScale = new Vector3(1, currentHeightScale, 1);
 
         startTime += Time.deltaTime;

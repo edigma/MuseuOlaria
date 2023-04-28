@@ -21,6 +21,8 @@ public class UIController : MonoBehaviour
 
     public GameObject introScreen;
     public GameObject inGame;
+    public GameObject finish;
+    public GameObject introText;
     public MorphContainer mContainer;
 
     void Start()
@@ -33,6 +35,11 @@ public class UIController : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        inGame.SetActive(false);
+        finish.SetActive(false);
+        introText.SetActive(true);
+        introScreen.SetActive(true);
     }
 
 
@@ -202,12 +209,22 @@ public class UIController : MonoBehaviour
         yield return null;
     }
 
+    public void Finish() {
+        mContainer.Stop();
+        introScreen.SetActive(false);
+        inGame.SetActive(false);
+        introText.SetActive(false);
+        finish.SetActive(true);
+    }
+
     public void Startinteraction()
     {
         mContainer.gameObject.SetActive(true);
         mContainer.Reset();
         introScreen.SetActive(false);
         inGame.SetActive(true);
+        introText.SetActive(true);
+        finish.SetActive(false);
     }
 
     public void RestartMesh()
@@ -217,8 +234,11 @@ public class UIController : MonoBehaviour
 
     public void Home()
     {
+        mContainer.Reset();
         mContainer.gameObject.SetActive(false);
         introScreen.SetActive(true);
+        introText.SetActive(true);
+        finish.SetActive(false);
         inGame.SetActive(false);
     }
 
