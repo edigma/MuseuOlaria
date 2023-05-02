@@ -30,6 +30,7 @@ public class DebugText : MonoBehaviour
 
     public void SetText(string s)
     {
+        Debug.Log(s);
         if(!SettingsManager.Instance) {
             return;
         }

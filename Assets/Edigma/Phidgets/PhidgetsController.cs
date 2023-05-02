@@ -12,7 +12,7 @@ public class PhidgetsController : MonoBehaviour
     float levelValue = 2.0f;
     bool levelSelectionEnabled = false;
     bool phidgetsReady = false;
-    int m_phidgetSerialNumber = 538745; //661125;  
+    int m_phidgetSerialNumber = 0;//682604;
     public CanvasGroup lockedCanvas;
     int m_position = 0;
 
@@ -57,8 +57,6 @@ public class PhidgetsController : MonoBehaviour
 
     private static void Encoder_PositionChange(object sender, Phidget22.Events.EncoderPositionChangeEventArgs e)
     {
-
-        
         // Access event source via the sender object
         Encoder ch = (Encoder)sender;
 
@@ -83,7 +81,6 @@ public class PhidgetsController : MonoBehaviour
             Destroy(this.gameObject);
             Debug.Log("Destroy this");
         }
-
     }
 
 
@@ -103,12 +100,20 @@ public class PhidgetsController : MonoBehaviour
     void CreatePhidgets()
     {
         Debug.Log("INIT PHIDGETS");
-        DebugText.Instance.SetText("INIT PHIDGETS");
 
-        encoder = new Encoder();
+        m_phidgetSerialNumber = BDController.Instance.PhidgetSerialNumber();
+
+        DebugText.Instance.SetText("INIT PHIDGETS " + m_phidgetSerialNumber);
+
+        if(m_phidgetSerialNumber == 0) {
+            DebugText.Instance.SetText("FAILED PHIDGETS RETRYING");
+            Invoke("CreatePhidgets", 2.0f);
+            return;
+        }
 
         try
         {
+            encoder = new Encoder();
             encoder.DeviceSerialNumber = m_phidgetSerialNumber;
             encoder.Open(250);
             encoder.DataInterval = encoder.MinDataInterval;
@@ -121,13 +126,7 @@ public class PhidgetsController : MonoBehaviour
             Debug.Log("Failure: " + ex.Message);
             DebugText.Instance.SetText("INIT PHIDGETS FAILED");
             phidgetsReady = false;
+            Invoke("CreatePhidgets", 2.0f);
         }
-    }
-
-    public float animTime = 0;
-    public float startAnimL = 0;
-
-    void Update() {
-        DebugText.Instance.SetText("E " + " " + m_position + "  " + m_encoderTime );
     }
 }

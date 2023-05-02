@@ -93,6 +93,16 @@ public class BDController : MonoBehaviour
         return 0.0f;
     }
 
+         public int PhidgetSerialNumber()
+    {
+        if (infoDoc != null)
+        {
+            return infoDoc.doc.values.phidgetSerialNumber;
+        }
+        return 0;
+    }
+
+
     public KeyValuePair<string, string> Translation(string id)
     {
 

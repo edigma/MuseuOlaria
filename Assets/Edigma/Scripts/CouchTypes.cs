@@ -81,5 +81,6 @@ public class CouchDocValues
     public float final_time = 5.0f;
     public float timeout = 10.0f;
     public float z_offset = 0.0f;
+    public int phidgetSerialNumber = 0;
 }
 
