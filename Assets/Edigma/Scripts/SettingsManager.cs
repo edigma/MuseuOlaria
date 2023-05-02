@@ -11,7 +11,7 @@ public class SettingsManager : MonoBehaviour
     public static SettingsManager Instance = null;
     private bool m_settingsLoaded = false;
     Dictionary<string, string> jsonData = new Dictionary<string, string>();
-    ASettings appSettings;
+    ASettings appSettings  = null;
 
     public string CouchDBUrl {
         get {
@@ -31,11 +31,12 @@ public class SettingsManager : MonoBehaviour
     public class AppSettings
     {
         public string bdUrl = "";
+        public bool debug = false;
     }
     [System.Serializable]
     public class ASettings
     {
-        public AppSettings appSettings;
+        public AppSettings appSettings = null;
     }
 
     public ASettings CurrentAppSettings
@@ -45,6 +46,15 @@ public class SettingsManager : MonoBehaviour
     public bool SettingsReady
     {
         get { return m_settingsLoaded; }
+    }
+
+    public bool DoDebug {
+        get {
+            if(appSettings == null) {
+                return true;
+            }
+            return appSettings.appSettings.debug;
+        }
     }
 
     void Awake()
@@ -58,6 +68,11 @@ public class SettingsManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+     
+    }
+
+    private void Start()
+    {   
         LoadSettings();
 
         if (appSettings == null)
@@ -71,12 +86,9 @@ public class SettingsManager : MonoBehaviour
         {
             appSettings.appSettings = new AppSettings();
             appSettings.appSettings.bdUrl = "";
+            appSettings.appSettings.debug = false;
             SaveAppSettings();
         }
-    }
-
-    private void Start()
-    {
     }
 
     public void SaveAppSettings()

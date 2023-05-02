@@ -58,6 +58,7 @@ public class PhidgetsController : MonoBehaviour
     private static void Encoder_PositionChange(object sender, Phidget22.Events.EncoderPositionChangeEventArgs e)
     {
 
+        
         // Access event source via the sender object
         Encoder ch = (Encoder)sender;
 
@@ -67,7 +68,6 @@ public class PhidgetsController : MonoBehaviour
         bool indexTriggered = e.IndexTriggered;
         Instance.m_position = positionChange;
         //Instance.m_encoderTime = timeChange
-        // Debug.Log(positionChange + " " + timeChange);
     }
 
     void Start()
@@ -103,6 +103,7 @@ public class PhidgetsController : MonoBehaviour
     void CreatePhidgets()
     {
         Debug.Log("INIT PHIDGETS");
+        DebugText.Instance.SetText("INIT PHIDGETS");
 
         encoder = new Encoder();
 
@@ -113,14 +114,20 @@ public class PhidgetsController : MonoBehaviour
             encoder.DataInterval = encoder.MinDataInterval;
             encoder.PositionChange += Encoder_PositionChange;
             phidgetsReady = true;
+            DebugText.Instance.SetText("INIT PHIDGETS OK");
         }
         catch (PhidgetException ex)
         {
             Debug.Log("Failure: " + ex.Message);
+            DebugText.Instance.SetText("INIT PHIDGETS FAILED");
             phidgetsReady = false;
         }
     }
 
     public float animTime = 0;
     public float startAnimL = 0;
+
+    void Update() {
+        DebugText.Instance.SetText("E " + " " + m_position + "  " + m_encoderTime );
+    }
 }

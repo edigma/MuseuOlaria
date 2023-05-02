@@ -24,15 +24,22 @@ public class DebugText : MonoBehaviour
 
     IEnumerator WaitClear()
     {
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(10.0f);
         text.text = "";
     }
 
     public void SetText(string s)
     {
+        if(!SettingsManager.Instance) {
+            return;
+        }
 
-        text.text += s + "\n";
-
+        if (!SettingsManager.Instance.DoDebug)
+        {
+            return;
+        }
+        
+        text.text = s + "\n" + text.text;
         StopAllCoroutines();
         StartCoroutine(WaitClear());
     }
