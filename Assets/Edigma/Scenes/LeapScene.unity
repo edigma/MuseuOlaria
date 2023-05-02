@@ -3256,8 +3256,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lockedCanvas: {fileID: 0}
-  animTime: 0
-  startAnimL: 0
 --- !u!114 &920558599
 MonoBehaviour:
   m_ObjectHideFlags: 0
