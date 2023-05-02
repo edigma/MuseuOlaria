@@ -21,7 +21,7 @@ public class MorphedCylinder : MonoBehaviour
     public Mesh startMesh;
     public Material meshMaterial;
     public Morpher[] morphers;
-
+    public float rotateSpeed = 1.0f;
     bool finished = false;
 
     public GameObject vert;
@@ -32,7 +32,7 @@ public class MorphedCylinder : MonoBehaviour
     Vector3[] normals;
     Mesh mesh;
     //public float interactionRadius = .5f;
-    public float rotateSpeed = 1.0f;
+
 
 
     GameObject[] verts;
@@ -164,13 +164,20 @@ public class MorphedCylinder : MonoBehaviour
         renderer.material = meshMaterial;
     }
 
-    public void Stop() {
+    public void Stop()
+    {
         finished = true;
     }
 
     void Start()
     {
         Reset();
+        BDController.Instance.Loaded.AddListener(CouchChanged);
+    }
+
+    public void CouchChanged() {
+        autoRotate = BDController.Instance.AutoRotate();
+        rotFactor = BDController.Instance.RotateFactor();
     }
 
     public float anim = 1.0f;
@@ -179,9 +186,10 @@ public class MorphedCylinder : MonoBehaviour
     void FixedUpdate()
     {
 
-if(finished) {
-    return;
-}
+        if (finished)
+        {
+            return;
+        }
         transform.localScale = new Vector3(1, currentHeightScale, 1);
 
         startTime += Time.deltaTime;
@@ -228,14 +236,18 @@ if(finished) {
             bool handIsDown = go.mainMorpher && go.transform.up.y > 0.5f;
             bool extrude = false;
 
-            if(go.mainMorpher && !handIsDown && !handIsUp) {
-                if(target.x > posY.x) {
+            if (go.mainMorpher && !handIsDown && !handIsUp)
+            {
+                if (target.x > posY.x)
+                {
                     extrude = go.transform.up.x > .5f;
-                } else {
+                }
+                else
+                {
                     extrude = go.transform.up.x < -.5f;
                 }
 
-               // Debug.Log(extrude + " " + (target.x - posY.x) + " " + go.transform.up.x);
+                // Debug.Log(extrude + " " + (target.x - posY.x) + " " + go.transform.up.x);
 
             }
 
@@ -272,7 +284,7 @@ if(finished) {
                 {
                     if (i == layers)
                     {
-                        
+
                         if (handIsUp)
                         {
                             if (pos.y > yVWorldPos.y)
@@ -296,7 +308,9 @@ if(finished) {
                                 }
                             }
                         }
-                    } else {
+                    }
+                    else
+                    {
                         continue;
                     }
                 }

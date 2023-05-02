@@ -537,6 +537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ee49601c5c8544586149cdfebd844b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text_id: 
   enText: PT
   ptText: EN
 --- !u!114 &139848423
@@ -632,6 +633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ee49601c5c8544586149cdfebd844b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text_id: ingame_d_4
   enText: The palm facing outwards makes the vase wider.
   ptText: "Com a palma virada para fora permite alargar a pe\xE7a."
 --- !u!114 &151850650
@@ -803,6 +805,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ee49601c5c8544586149cdfebd844b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text_id: ingame_d_2
   enText: Lower the hand with the palm facing down to decrease the height of the
     vase.
   ptText: "Des\xE7a a m\xE3o com a palma  virada para baixo para  diminuir a altura
@@ -901,6 +904,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ee49601c5c8544586149cdfebd844b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text_id: ingame_d_3
   enText: With the palm facing inwards, press the vase to make it thinner.
   ptText: "Com a palma virada para dentro empurre a pe\xE7a para a estreitar."
 --- !u!114 &257335312
@@ -1038,6 +1042,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ee49601c5c8544586149cdfebd844b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text_id: intro_title
   enText: CREATE YOUR VASE HERE
   ptText: "CRIE A SUA PE\xC7A AQUI"
 --- !u!1 &312934748
@@ -1473,8 +1478,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 255, y: 200, z: 1}
-  m_Center: {x: 0, y: 120, z: 0}
+  m_Size: {x: 255, y: 300, z: 1}
+  m_Center: {x: 0, y: 150, z: 0}
 --- !u!225 &370101648
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1553,8 +1558,8 @@ Transform:
   m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_Father: {fileID: 878230161}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &462740319
 GameObject:
@@ -1683,6 +1688,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ee49601c5c8544586149cdfebd844b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text_id: ingame_d_1
   enText: Raise the hand with the palm facing up to increase the height of the vase.
   ptText: "Eleve a m\xE3o com a palma  virada para cima para  aumentar a altura da
     pe\xE7a."
@@ -1822,6 +1828,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ee49601c5c8544586149cdfebd844b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text_id: intro_d_1
   enText: Move the hand over the "Start" button to begin the experience.
   ptText: "Passe a m\xE3o por cima do bot\xE3o \"Iniciar\" para come\xE7ar a experi\xEAncia."
 --- !u!1 &644515226
@@ -1863,7 +1870,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 240, y: 50}
+  m_AnchoredPosition: {x: 119, y: 50}
   m_SizeDelta: {x: 260, y: 154}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &644515228
@@ -1914,8 +1921,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 255, y: 200, z: 1}
-  m_Center: {x: 129.64, y: 120, z: 0}
+  m_Size: {x: 255, y: 300, z: 1}
+  m_Center: {x: 129.64, y: 150, z: 0}
 --- !u!225 &644515230
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -2077,8 +2084,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 255, y: 200, z: 1}
-  m_Center: {x: 0, y: 120, z: 0}
+  m_Size: {x: 255, y: 300, z: 1}
+  m_Center: {x: 0, y: 150, z: 0}
 --- !u!114 &646782691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2159,6 +2166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ee49601c5c8544586149cdfebd844b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text_id: ingame_b_2
   enText: Restart
   ptText: "Recome\xE7ar"
 --- !u!114 &657619301
@@ -2659,6 +2667,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ee49601c5c8544586149cdfebd844b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text_id: intro_d_2
   enText: Move the wheel with the foot to shape the vase.
   ptText: "Mova a roda com o p\xE9 para modelar a pe\xE7a."
 --- !u!1 &835602510
@@ -2815,6 +2824,40 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 849730341}
   m_CullTransparentMesh: 1
+--- !u!1 &878230160
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 878230161}
+  m_Layer: 0
+  m_Name: ZOff
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &878230161
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 878230160}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 419426145}
+  - {fileID: 256273701197430801}
+  - {fileID: 1007543901}
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &889157689
 GameObject:
   m_ObjectHideFlags: 0
@@ -3062,6 +3105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ee49601c5c8544586149cdfebd844b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text_id: intro_b_1
   enText: Start
   ptText: Iniciar
 --- !u!1 &920558595
@@ -3075,6 +3119,8 @@ GameObject:
   - component: {fileID: 920558596}
   - component: {fileID: 920558597}
   - component: {fileID: 920558598}
+  - component: {fileID: 920558599}
+  - component: {fileID: 920558600}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -3115,6 +3161,9 @@ MonoBehaviour:
   handL: {fileID: 1168175323}
   selectiontime: 1
   timeout: 10
+  finish_time: 10
+  z_int_offset: 0
+  mainOffset: {fileID: 878230161}
   introScreen: {fileID: 731934976}
   inGame: {fileID: 312934748}
   finish: {fileID: 14472443}
@@ -3135,6 +3184,40 @@ MonoBehaviour:
   lockedCanvas: {fileID: 0}
   animTime: 0
   startAnimL: 0
+--- !u!114 &920558599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 920558595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ae4c0121e530fb45a6823668cd7dc2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &920558600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 920558595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4739cc0861c607845bb52b48fd008970, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Changed:
+    m_PersistentCalls:
+      m_Calls: []
+  lastRequest: 0
+  lastUrl: 
+  Loaded:
+    m_PersistentCalls:
+      m_Calls: []
+  ErrorString: 
+  refreshTime: 5
 --- !u!1 &933542341
 GameObject:
   m_ObjectHideFlags: 0
@@ -3186,6 +3269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ee49601c5c8544586149cdfebd844b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text_id: ingame_b_1
   enText: Finish
   ptText: Terminar
 --- !u!114 &933542344
@@ -3296,7 +3380,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1007543900
 GameObject:
@@ -3322,7 +3406,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1007543900}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.172, z: 0.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3330,8 +3414,8 @@ Transform:
   - {fileID: 1505845348}
   - {fileID: 364548189}
   - {fileID: 1440792964}
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_Father: {fileID: 878230161}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1007543903
 MonoBehaviour:
@@ -3777,8 +3861,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 255, y: 200, z: 1}
-  m_Center: {x: 0, y: 120, z: 0}
+  m_Size: {x: 255, y: 300, z: 1}
+  m_Center: {x: 0, y: 150, z: 0}
 --- !u!225 &1367389873
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -3922,6 +4006,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ee49601c5c8544586149cdfebd844b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text_id: intro_t_3
   enText: Handling the Vase
   ptText: "Manusear a Pe\xE7a"
 --- !u!1 &1427757895
@@ -4017,6 +4102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ee49601c5c8544586149cdfebd844b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text_id: intro_t_1
   enText: Start the experience
   ptText: "Iniciar Experi\xEAncia"
 --- !u!1 &1440792963
@@ -4199,7 +4285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e4ee2c2254ea59438dfffcc37b468f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoRotate: 1
+  autoRotate: 0
   rotFactor: 1
   morphForce: 5
   segments: 50
@@ -4217,9 +4303,9 @@ MonoBehaviour:
   - {fileID: 704912646}
   - {fileID: 1168175323}
   - {fileID: 45524315}
+  rotateSpeed: 5
   vert: {fileID: 9172801937621500986, guid: c5f267686789d6449a119dc3df875b56, type: 3}
   vert2: {fileID: 1082140406}
-  rotateSpeed: 5
   debug: 0
   sizeUp: 0
   sizeDown: 0
@@ -4277,6 +4363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ee49601c5c8544586149cdfebd844b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text_id: ingame_b_1
   enText: Finish
   ptText: Terminar
 --- !u!114 &1537300903
@@ -4491,6 +4578,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ee49601c5c8544586149cdfebd844b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text_id: 
   enText: Use a single finger to apply an effect with greater precision, or the whole
     hand to increase the intensity.
   ptText: "Utilize apenas um dedo para  aplicar um efeito com mais  precis\xE3o,
@@ -4747,7 +4835,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -1089, y: 50}
+  m_AnchoredPosition: {x: -1210, y: 50}
   m_SizeDelta: {x: 300, y: 154}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1648361621
@@ -4798,8 +4886,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 300, y: 200, z: 1}
-  m_Center: {x: -150, y: 120, z: 0}
+  m_Size: {x: 300, y: 300, z: 1}
+  m_Center: {x: -150, y: 150, z: 0}
 --- !u!225 &1648361623
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -4901,6 +4989,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ee49601c5c8544586149cdfebd844b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text_id: finish_d
   enText: Your experience has ended. Thank you!
   ptText: "A sua experi\xEAncia est\xE1 conclu\xEDda. Obrigado!"
 --- !u!114 &1651630019
@@ -5384,6 +5473,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ee49601c5c8544586149cdfebd844b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text_id: intro_t_2
   enText: Spin the Wheel
   ptText: "Girar a Pe\xE7a"
 --- !u!1 &2071682465
@@ -5611,87 +5701,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2072866424}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &2091704072
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 8d2f40d6cefd68e4db881db113add0bb, type: 3}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 8d2f40d6cefd68e4db881db113add0bb, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 10.418898
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 8d2f40d6cefd68e4db881db113add0bb, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 10.418898
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 8d2f40d6cefd68e4db881db113add0bb, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 10.418898
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 8d2f40d6cefd68e4db881db113add0bb, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 8d2f40d6cefd68e4db881db113add0bb, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.016
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 8d2f40d6cefd68e4db881db113add0bb, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.187
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 8d2f40d6cefd68e4db881db113add0bb, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071067
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 8d2f40d6cefd68e4db881db113add0bb, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 8d2f40d6cefd68e4db881db113add0bb, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 8d2f40d6cefd68e4db881db113add0bb, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 8d2f40d6cefd68e4db881db113add0bb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 8d2f40d6cefd68e4db881db113add0bb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 8d2f40d6cefd68e4db881db113add0bb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -7511558181221131132, guid: 8d2f40d6cefd68e4db881db113add0bb, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 38a093d1e36270f43987e74c5afd6c1d, type: 2}
-    - target: {fileID: 919132149155446097, guid: 8d2f40d6cefd68e4db881db113add0bb, type: 3}
-      propertyPath: m_Name
-      value: issoaqui
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 8d2f40d6cefd68e4db881db113add0bb, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 8d2f40d6cefd68e4db881db113add0bb, type: 3}
 --- !u!1 &2101582629
 GameObject:
   m_ObjectHideFlags: 0
@@ -5979,7 +5988,7 @@ Transform:
   - {fileID: 4411216591564572}
   - {fileID: 4917671820051170}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4151435137985710
 Transform:
@@ -6394,8 +6403,8 @@ Transform:
   m_Children:
   - {fileID: 5185889487251399910}
   - {fileID: 920558596}
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_Father: {fileID: 878230161}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 18.347, y: 0, z: 0}
 --- !u!1 &256273701197430814
 GameObject:

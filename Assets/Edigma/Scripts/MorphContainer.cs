@@ -36,12 +36,12 @@ public class MorphContainer : MonoBehaviour
     public MorphedCylinder cylinder;
     void Start()
     {
-        morph_init_pos = transform.position;
+        morph_init_pos = transform.localPosition;
         morph_init_scale = transform.localScale;
-        morph_init_rot = transform.rotation;
-        morph_finish_pos = target.position;
+        morph_init_rot = transform.localRotation;
+        morph_finish_pos = target.localPosition;
         morph_finish_scale = target.localScale;
-        morph_finish_rot = target.rotation;
+        morph_finish_rot = target.localRotation;
         morph_target_pos = morph_init_pos;
         morph_target_scale = morph_init_scale;
         morph_target_rot = morph_init_rot;
@@ -57,8 +57,8 @@ public class MorphContainer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.rotation = Quaternion.Lerp(transform.rotation, morph_target_rot, Time.deltaTime * moveSpeed);
-        transform.position = Vector3.Lerp(transform.position, morph_target_pos, Time.deltaTime * moveSpeed);
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, morph_target_rot, Time.deltaTime * moveSpeed);
+        transform.localPosition = Vector3.Lerp(transform.localPosition, morph_target_pos, Time.deltaTime * moveSpeed);
         transform.localScale = Vector3.Lerp(transform.localScale, morph_target_scale, Time.deltaTime * moveSpeed);
     }
 

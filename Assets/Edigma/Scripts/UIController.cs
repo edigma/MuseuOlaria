@@ -14,10 +14,15 @@ public class UIController : MonoBehaviour
     public Morpher handL;
     public float selectiontime = 3.0f;
     public float timeout = 10.0f;
+    public float finish_time = 10.0f;
+
+    public float z_int_offset = .0f;
     float lastInteraction = 0f;
     float doneTime = 0.0f;
     LeapButton lastR = null;
     LeapButton lastL = null;
+
+    public Transform mainOffset;
 
     public GameObject introScreen;
     public GameObject inGame;
@@ -40,6 +45,12 @@ public class UIController : MonoBehaviour
         finish.SetActive(false);
         introText.SetActive(true);
         introScreen.SetActive(true);
+        BDController.Instance.Loaded.AddListener(CouchChanged);
+    }
+
+    public void CouchChanged() {
+        timeout = BDController.Instance.Timeout();
+        finish_time = BDController.Instance.FinalTime();
     }
 
 
@@ -50,6 +61,8 @@ public class UIController : MonoBehaviour
         int layerMask = 1 << 5;
         LeapButton lR = null;
         LeapButton lL = null;
+
+        mainOffset.position = new Vector3(0.0f,0.0f,BDController.Instance.ZOffset());
 
         if (!handL.gameObject.activeInHierarchy && !handR.gameObject.activeInHierarchy)
         {
@@ -74,7 +87,7 @@ public class UIController : MonoBehaviour
 
         if (handL.gameObject.activeInHierarchy)
         {
-            Vector3 dir = handL.transform.position - Camera.main.transform.position;
+            Vector3 dir = (handL.transform.position + new Vector3(0,z_int_offset,0)) - Camera.main.transform.position;
             if (Physics.Raycast(Camera.main.transform.position, dir, out hit, Mathf.Infinity, layerMask))
             {
                 lL = hit.transform.gameObject.GetComponent<LeapButton>();
@@ -92,7 +105,7 @@ public class UIController : MonoBehaviour
 
         if (handR.gameObject.activeInHierarchy)
         {
-            Vector3 dir = handR.transform.position - Camera.main.transform.position;
+            Vector3 dir = (handR.transform.position + new Vector3(0,z_int_offset,0)) - Camera.main.transform.position;
             if (Physics.Raycast(Camera.main.transform.position, dir, out hit, Mathf.Infinity, layerMask))
             {
                 lR = hit.transform.gameObject.GetComponent<LeapButton>();
@@ -209,12 +222,19 @@ public class UIController : MonoBehaviour
         yield return null;
     }
 
+    IEnumerator RestartApp()
+    {
+        yield return new WaitForSeconds(finish_time);
+        RestartApp();
+    }
+
     public void Finish() {
         mContainer.Stop();
         introScreen.SetActive(false);
         inGame.SetActive(false);
         introText.SetActive(false);
         finish.SetActive(true);
+        StartCoroutine(RestartApp());
     }
 
     public void Startinteraction()

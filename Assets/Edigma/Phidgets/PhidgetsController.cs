@@ -4,13 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Phidget22;
 using Phidget22.Events;
-
+using System;
 public class PhidgetsController : MonoBehaviour
 {
     public static PhidgetsController Instance = null;
-
     private Encoder encoder = null;
-
     float levelValue = 2.0f;
     bool levelSelectionEnabled = false;
     bool phidgetsReady = false;
@@ -21,20 +19,31 @@ public class PhidgetsController : MonoBehaviour
     double m_encoderTime = 0;
     public float M_Position
     {
-        get { 
+        get
+        {
             float ret = (m_position / 1440.0f) * 360f;
-            return ret; 
-            }
+            return ret;
+        }
     }
 
     public float M_DataInterval
     {
-        get { 
-            if(encoder == null) {
+        get
+        {
+            try
+            {
+                if (encoder == null)
+                {
+                    return 0.1f;
+                }
+                return encoder.DataInterval / 1000.0f;
+            }
+
+            catch (Exception e)
+            {
                 return 0.1f;
             }
-            return encoder.DataInterval / 1000.0f; 
-            }
+        }
     }
     public double M_EncoderTime
     {
@@ -58,7 +67,7 @@ public class PhidgetsController : MonoBehaviour
         bool indexTriggered = e.IndexTriggered;
         Instance.m_position = positionChange;
         //Instance.m_encoderTime = timeChange
-       // Debug.Log(positionChange + " " + timeChange);
+        // Debug.Log(positionChange + " " + timeChange);
     }
 
     void Start()
@@ -114,6 +123,4 @@ public class PhidgetsController : MonoBehaviour
 
     public float animTime = 0;
     public float startAnimL = 0;
-
-
 }
