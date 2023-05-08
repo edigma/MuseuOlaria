@@ -3250,7 +3250,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 920558595}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac50e643b99600049a3dfe329601f75f, type: 3}
   m_Name: 
@@ -4458,7 +4458,7 @@ MonoBehaviour:
   layers: 50
   radius: 0.1
   insideRadius: 0.09
-  height: 0.3
+  height: 0.25
   heightSpeed: 0.5
   heightScale: 0.3
   maxHeightScale: 1.2

@@ -44,6 +44,7 @@ public class MorphedCylinder : MonoBehaviour
     public bool sizeUp = false;
     public bool sizeDown = false;
     public bool expand = false;
+    bool allocated = false;
 
     void DoTriangles()
     {
@@ -92,24 +93,11 @@ public class MorphedCylinder : MonoBehaviour
 
     void GenerateInit()
     {
-        mesh = new Mesh();
-        mesh.indexFormat = IndexFormat.UInt32;
-        GetComponent<MeshFilter>().mesh = mesh;
-
-        int numVertices = (segments + 1) * (layers + (layers / 1));
-        vertices = new Vector3[numVertices];
-        normals = new Vector3[numVertices];
-        triangles = new int[segments * (layers + (layers / 1)) * 6];
-
-        verticesRadius = new float[numVertices];
-        if (debug)
-        {
-            verts = new GameObject[numVertices];
+        if(!allocated) {
+            Allocate();
         }
-
         float angleStep = 2f * Mathf.PI / segments;
-        cos = new float[segments + 1];
-        sin = new float[segments + 1];
+
         for (int j = 0; j <= segments; j++)
         {
             cos[j] = Mathf.Cos(j * angleStep);
@@ -152,8 +140,25 @@ public class MorphedCylinder : MonoBehaviour
         }
     }
 
+    void Allocate()
+    {
+        mesh = new Mesh();
+        mesh.indexFormat = IndexFormat.UInt32;
+        GetComponent<MeshFilter>().mesh = mesh;
+
+        int numVertices = (segments + 1) * (layers + (layers / 1));
+        vertices = new Vector3[numVertices];
+        normals = new Vector3[numVertices];
+        triangles = new int[segments * (layers + (layers / 1)) * 6];
+        cos = new float[segments + 1];
+        sin = new float[segments + 1];
+        verticesRadius = new float[numVertices];
+        allocated = true;
+    }
+
     public void Reset()
     {
+        Debug.Log("RESET MESH");
         finished = false;
         currentHeightScale = heightScale;
         startTime = .0f;
@@ -169,13 +174,19 @@ public class MorphedCylinder : MonoBehaviour
         finished = true;
     }
 
+    void Awake()
+    {
+        Allocate();
+    }
+
     void Start()
     {
         Reset();
         BDController.Instance.Loaded.AddListener(CouchChanged);
     }
 
-    public void CouchChanged() {
+    public void CouchChanged()
+    {
         autoRotate = BDController.Instance.AutoRotate();
         rotFactor = BDController.Instance.RotateFactor();
     }

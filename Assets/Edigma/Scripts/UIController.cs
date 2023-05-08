@@ -30,6 +30,8 @@ public class UIController : MonoBehaviour
     public GameObject introText;
     public MorphContainer mContainer;
 
+    bool locked = false;
+
     void Start()
     {
         if (Instance == null)
@@ -67,10 +69,11 @@ public class UIController : MonoBehaviour
         if (!handL.gameObject.activeInHierarchy && !handR.gameObject.activeInHierarchy)
         {
             lastInteraction += Time.deltaTime;
-            if (lastInteraction >= timeout)
+            if (lastInteraction >= timeout && !locked)
             {
-                RestartMesh();
                 Home();
+                locked = true;
+                Debug.Log("LOCKED");
             }
             if (lastL)
             {
@@ -80,7 +83,11 @@ public class UIController : MonoBehaviour
             {
                 lastR.Off();
             }
+            
             return;
+        } else if(locked) {
+            locked = false;
+            Debug.Log("UNLOCKED");
         }
 
         lastInteraction = 0.0f;
@@ -254,6 +261,7 @@ public class UIController : MonoBehaviour
 
     public void Home()
     {
+        Debug.Log("HOME");
         mContainer.Reset();
         mContainer.gameObject.SetActive(false);
         introScreen.SetActive(true);
