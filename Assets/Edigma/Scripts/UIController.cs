@@ -50,7 +50,8 @@ public class UIController : MonoBehaviour
         BDController.Instance.Loaded.AddListener(CouchChanged);
     }
 
-    public void CouchChanged() {
+    public void CouchChanged()
+    {
         timeout = BDController.Instance.Timeout();
         finish_time = BDController.Instance.FinalTime();
     }
@@ -64,7 +65,7 @@ public class UIController : MonoBehaviour
         LeapButton lR = null;
         LeapButton lL = null;
 
-        mainOffset.position = new Vector3(0.0f,0.0f,BDController.Instance.ZOffset());
+        mainOffset.position = new Vector3(0.0f, 0.0f, BDController.Instance.ZOffset());
 
         if (!handL.gameObject.activeInHierarchy && !handR.gameObject.activeInHierarchy)
         {
@@ -83,9 +84,11 @@ public class UIController : MonoBehaviour
             {
                 lastR.Off();
             }
-            
+
             return;
-        } else if(locked) {
+        }
+        else if (locked)
+        {
             locked = false;
             Debug.Log("UNLOCKED");
         }
@@ -94,7 +97,8 @@ public class UIController : MonoBehaviour
 
         if (handL.gameObject.activeInHierarchy)
         {
-            Vector3 dir = (handL.transform.position + new Vector3(0,z_int_offset,0)) - Camera.main.transform.position;
+            Vector3 dir = (handL.transform.position + new Vector3(0, z_int_offset, 0)) - Camera.main.transform.position;
+            //Debug.DrawRay(Camera.main.transform.position,dir * 100,Color.red,0.1f);
             if (Physics.Raycast(Camera.main.transform.position, dir, out hit, Mathf.Infinity, layerMask))
             {
                 lL = hit.transform.gameObject.GetComponent<LeapButton>();
@@ -112,7 +116,7 @@ public class UIController : MonoBehaviour
 
         if (handR.gameObject.activeInHierarchy)
         {
-            Vector3 dir = (handR.transform.position + new Vector3(0,z_int_offset,0)) - Camera.main.transform.position;
+            Vector3 dir = (handR.transform.position + new Vector3(0, z_int_offset, 0)) - Camera.main.transform.position;
             if (Physics.Raycast(Camera.main.transform.position, dir, out hit, Mathf.Infinity, layerMask))
             {
                 lR = hit.transform.gameObject.GetComponent<LeapButton>();
@@ -155,6 +159,10 @@ public class UIController : MonoBehaviour
                 {
                     doneTime = 0.0f;
                 }
+                if (lastL)
+                {
+                    lastL.Off();
+                }
                 lL.On();
 
                 lastL = lL;
@@ -177,6 +185,10 @@ public class UIController : MonoBehaviour
                 else
                 {
                     doneTime = 0.0f;
+                }
+                if (lastR)
+                {
+                    lastR.Off();
                 }
                 lR.On();
                 lastR = lR;
@@ -235,7 +247,8 @@ public class UIController : MonoBehaviour
         RestartApp();
     }
 
-    public void Finish() {
+    public void Finish()
+    {
         mContainer.Stop();
         introScreen.SetActive(false);
         inGame.SetActive(false);
@@ -275,16 +288,19 @@ public class UIController : MonoBehaviour
         LanguageEN = !LanguageEN;
     }
 
-    public void SizeUp() {
+    public void SizeUp()
+    {
         mContainer.SizeUp();
     }
 
-    public void SizeDown() {
+    public void SizeDown()
+    {
         mContainer.SizeDown();
     }
 
-    public void NoSize() {
-        
+    public void NoSize()
+    {
+
     }
 
 }
