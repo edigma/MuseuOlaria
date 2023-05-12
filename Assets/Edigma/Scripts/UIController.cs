@@ -25,9 +25,19 @@ public class UIController : MonoBehaviour
     public Transform mainOffset;
 
     public GameObject introScreen;
+    public GameObject helpScreen;
     public GameObject inGame;
     public GameObject finish;
+    public GameObject callToAction;
     public GameObject introText;
+
+    public SpritePlayer video1;
+    public SpritePlayer video2;
+
+    public SpritePlayer video3;
+    public SpritePlayer video4;
+    public GameObject inGameVideos;
+
     public MorphContainer mContainer;
 
     bool locked = false;
@@ -46,7 +56,10 @@ public class UIController : MonoBehaviour
         inGame.SetActive(false);
         finish.SetActive(false);
         introText.SetActive(true);
-        introScreen.SetActive(true);
+        introScreen.SetActive(false);
+        callToAction.SetActive(true);
+        helpScreen.SetActive(false);
+
         BDController.Instance.Loaded.AddListener(CouchChanged);
     }
 
@@ -72,7 +85,7 @@ public class UIController : MonoBehaviour
             lastInteraction += Time.deltaTime;
             if (lastInteraction >= timeout && !locked)
             {
-                Home();
+                Lock();
                 locked = true;
                 Debug.Log("LOCKED");
             }
@@ -87,9 +100,10 @@ public class UIController : MonoBehaviour
 
             return;
         }
-        else if (locked)
+        else if (locked || callToAction.activeInHierarchy)
         {
             locked = false;
+            Home();
             Debug.Log("UNLOCKED");
         }
 
@@ -254,7 +268,25 @@ public class UIController : MonoBehaviour
         inGame.SetActive(false);
         introText.SetActive(false);
         finish.SetActive(true);
+        helpScreen.SetActive(false);
+
         StartCoroutine(RestartApp());
+    }
+
+    public void TempHelp()
+    {
+        StartCoroutine(TempHelpRoutine());
+    }
+
+    IEnumerator TempHelpRoutine()
+    {
+        inGameVideos.SetActive(true);
+        video3.Play();
+        video4.Play();
+        yield return new WaitForSeconds(10.0f);
+        video3.Stop();
+        video4.Stop();
+        inGameVideos.SetActive(false);
     }
 
     public void Startinteraction()
@@ -265,11 +297,53 @@ public class UIController : MonoBehaviour
         inGame.SetActive(true);
         introText.SetActive(true);
         finish.SetActive(false);
+        helpScreen.SetActive(false);
+        video1.Stop();
+        video2.Stop();
+        video3.Stop();
+        video4.Stop();
+        inGameVideos.SetActive(false);
     }
 
     public void RestartMesh()
     {
         mContainer.Reset();
+    }
+
+    public void Lock()
+    {
+        Debug.Log("LOCK SCREEN");
+        mContainer.Reset();
+        mContainer.gameObject.SetActive(false);
+        introScreen.SetActive(false);
+        callToAction.SetActive(true);
+        introText.SetActive(true);
+        finish.SetActive(false);
+        inGame.SetActive(false);
+        helpScreen.SetActive(false);
+        video1.Stop();
+        video2.Stop();
+        video3.Stop();
+        video4.Stop();
+        inGameVideos.SetActive(false);
+    }
+
+    public void HelpScreen()
+    {
+        Debug.Log("Screen");
+        mContainer.Reset();
+        mContainer.gameObject.SetActive(false);
+        introScreen.SetActive(false);
+        callToAction.SetActive(false);
+        introText.SetActive(false);
+        finish.SetActive(false);
+        inGame.SetActive(false);
+        helpScreen.SetActive(true);
+        video1.Play();
+        video2.Play();
+        video3.Stop();
+        video4.Stop();
+        inGameVideos.SetActive(false);
     }
 
     public void Home()
@@ -278,9 +352,15 @@ public class UIController : MonoBehaviour
         mContainer.Reset();
         mContainer.gameObject.SetActive(false);
         introScreen.SetActive(true);
+        callToAction.SetActive(false);
         introText.SetActive(true);
         finish.SetActive(false);
         inGame.SetActive(false);
+        helpScreen.SetActive(false);
+        video1.Stop();
+        video2.Stop();
+        video3.Stop();
+        video4.Stop();
     }
 
     public void Language()
@@ -304,3 +384,5 @@ public class UIController : MonoBehaviour
     }
 
 }
+
+

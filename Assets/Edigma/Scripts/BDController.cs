@@ -125,7 +125,7 @@ public class BDController : MonoBehaviour
             case "finish_d": return new KeyValuePair<string, string>(infoDoc.doc.values.finish_d_pt, infoDoc.doc.values.finish_d_en); ;
         }
 
-        return new KeyValuePair<string, string>();
+        return new KeyValuePair<string, string>("","");
     }
 
     // CouchDB Find Changes

@@ -242,6 +242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionRadius: 0.04
+  mainMorpher: 0
 --- !u!114 &107316944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -487,6 +488,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionRadius: 0.005
+  mainMorpher: 0
 --- !u!1 &960947532
 GameObject:
   m_ObjectHideFlags: 0
@@ -602,6 +604,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe1c30b1add885e4fa9e14a7cf2ec32d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 0
+  target: {fileID: 0}
   cylinder: {fileID: 1505845351}
 --- !u!1 &1082140406
 GameObject:
@@ -722,6 +726,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionRadius: 0.005
+  mainMorpher: 0
 --- !u!1 &1168175318
 GameObject:
   m_ObjectHideFlags: 0
@@ -841,6 +846,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionRadius: 0.04
+  mainMorpher: 0
 --- !u!1 &1361256666
 GameObject:
   m_ObjectHideFlags: 0
@@ -1021,7 +1027,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e4ee2c2254ea59438dfffcc37b468f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  extrude: 0
   autoRotate: 1
   rotFactor: 1
   morphForce: 5
@@ -1040,9 +1045,9 @@ MonoBehaviour:
   - {fileID: 704912646}
   - {fileID: 1168175323}
   - {fileID: 45524315}
+  rotateSpeed: 5
   vert: {fileID: 9172801937621500986, guid: c5f267686789d6449a119dc3df875b56, type: 3}
   vert2: {fileID: 1082140406}
-  rotateSpeed: 5
   debug: 0
   sizeUp: 0
   sizeDown: 0
