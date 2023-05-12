@@ -273,13 +273,18 @@ public class UIController : MonoBehaviour
         StartCoroutine(RestartApp());
     }
 
+    bool helping = false;
     public void TempHelp()
     {
+        if(helping) {
+            return;
+        }
         StartCoroutine(TempHelpRoutine());
     }
 
     IEnumerator TempHelpRoutine()
     {
+        helping = true;
         inGameVideos.SetActive(true);
         video3.Play();
         video4.Play();
@@ -287,6 +292,7 @@ public class UIController : MonoBehaviour
         video3.Stop();
         video4.Stop();
         inGameVideos.SetActive(false);
+        helping = false;
     }
 
     public void Startinteraction()

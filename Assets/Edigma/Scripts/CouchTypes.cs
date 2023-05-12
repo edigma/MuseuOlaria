@@ -80,12 +80,12 @@ public class CouchDocValues
     public string ingame_d_4_pt;
     public string ingame_d_4_en;
     */
-    public string ingame_b_1_pt;
-    public string ingame_b_1_en;
-    public string ingame_b_2_pt;
-    public string ingame_b_2_en;
-    public string ingame_b_3_pt;
-    public string ingame_b_3_en;
+    public string ingame_b_1_pt = "";
+    public string ingame_b_1_en = "";
+    public string ingame_b_2_pt = "";
+    public string ingame_b_2_en = "";
+    public string ingame_b_3_pt = "";
+    public string ingame_b_3_en = "";
     public string intro2_t_1_pt = "";
     public string intro2_t_1_en = "";
     public string intro2_d_1_pt = "";
