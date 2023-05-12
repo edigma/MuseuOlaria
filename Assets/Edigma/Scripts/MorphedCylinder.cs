@@ -158,6 +158,7 @@ public class MorphedCylinder : MonoBehaviour
 
     public void Reset()
     {
+        CouchChanged();
         Debug.Log("RESET MESH");
         finished = false;
         currentHeightScale = heightScale;

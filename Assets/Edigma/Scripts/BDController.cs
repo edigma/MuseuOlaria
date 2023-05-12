@@ -54,7 +54,7 @@ public class BDController : MonoBehaviour
         {
             return infoDoc.doc.values.auto_rotate;
         }
-        return true;
+        return false;
     }
 
     public float RotateFactor()

@@ -24,11 +24,11 @@ public class UIController : MonoBehaviour
 
     public Transform mainOffset;
 
-    public GameObject introScreen;
-    public GameObject helpScreen;
-    public GameObject inGame;
-    public GameObject finish;
-    public GameObject callToAction;
+    public MySmoothCanvas introScreen;
+    public MySmoothCanvas helpScreen;
+    public MySmoothCanvas inGame;
+    public MySmoothCanvas finish;
+    public MySmoothCanvas callToAction;
     public GameObject introText;
 
     public SpritePlayer video1;
@@ -53,12 +53,12 @@ public class UIController : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        inGame.SetActive(false);
-        finish.SetActive(false);
+        inGame.Show(false);
+        finish.Show(false);
         introText.SetActive(true);
-        introScreen.SetActive(false);
-        callToAction.SetActive(true);
-        helpScreen.SetActive(false);
+        introScreen.Show(false);
+        callToAction.Show(true);
+        helpScreen.Show(false);
 
         BDController.Instance.Loaded.AddListener(CouchChanged);
     }
@@ -100,7 +100,7 @@ public class UIController : MonoBehaviour
 
             return;
         }
-        else if (locked || callToAction.activeInHierarchy)
+        else if (locked || callToAction.Showing)
         {
             locked = false;
             Home();
@@ -264,11 +264,11 @@ public class UIController : MonoBehaviour
     public void Finish()
     {
         mContainer.Stop();
-        introScreen.SetActive(false);
-        inGame.SetActive(false);
+        introScreen.Show(false);
+        inGame.Show(false);
         introText.SetActive(false);
-        finish.SetActive(true);
-        helpScreen.SetActive(false);
+        finish.Show(true);
+        helpScreen.Show(false);
 
         StartCoroutine(RestartApp());
     }
@@ -293,11 +293,11 @@ public class UIController : MonoBehaviour
     {
         mContainer.gameObject.SetActive(true);
         mContainer.Reset();
-        introScreen.SetActive(false);
-        inGame.SetActive(true);
+        introScreen.Show(false);
+        inGame.Show(true);
         introText.SetActive(true);
-        finish.SetActive(false);
-        helpScreen.SetActive(false);
+        finish.Show(false);
+        helpScreen.Show(false);
         video1.Stop();
         video2.Stop();
         video3.Stop();
@@ -315,12 +315,12 @@ public class UIController : MonoBehaviour
         Debug.Log("LOCK SCREEN");
         mContainer.Reset();
         mContainer.gameObject.SetActive(false);
-        introScreen.SetActive(false);
-        callToAction.SetActive(true);
+        introScreen.Show(false);
+        callToAction.Show(true);
         introText.SetActive(true);
-        finish.SetActive(false);
-        inGame.SetActive(false);
-        helpScreen.SetActive(false);
+        finish.Show(false);
+        inGame.Show(false);
+        helpScreen.Show(false);
         video1.Stop();
         video2.Stop();
         video3.Stop();
@@ -333,12 +333,12 @@ public class UIController : MonoBehaviour
         Debug.Log("Screen");
         mContainer.Reset();
         mContainer.gameObject.SetActive(false);
-        introScreen.SetActive(false);
-        callToAction.SetActive(false);
+        introScreen.Show(false);
+        callToAction.Show(false);
         introText.SetActive(false);
-        finish.SetActive(false);
-        inGame.SetActive(false);
-        helpScreen.SetActive(true);
+        finish.Show(false);
+        inGame.Show(false);
+        helpScreen.Show(true);
         video1.Play();
         video2.Play();
         video3.Stop();
@@ -351,12 +351,12 @@ public class UIController : MonoBehaviour
         Debug.Log("HOME");
         mContainer.Reset();
         mContainer.gameObject.SetActive(false);
-        introScreen.SetActive(true);
-        callToAction.SetActive(false);
+        introScreen.Show(true);
+        callToAction.Show(false);
         introText.SetActive(true);
-        finish.SetActive(false);
-        inGame.SetActive(false);
-        helpScreen.SetActive(false);
+        finish.Show(false);
+        inGame.Show(false);
+        helpScreen.Show(false);
         video1.Stop();
         video2.Stop();
         video3.Stop();
