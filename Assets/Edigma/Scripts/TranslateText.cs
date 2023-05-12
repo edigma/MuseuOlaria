@@ -17,11 +17,15 @@ public class TranslateText : MonoBehaviour
         text.text = ptText;
 
         BDController.Instance.Loaded.AddListener(BDUpdate);
+        BDUpdate();
     }
-
 
     void BDUpdate()
     {
+        if(! BDController.Instance) {
+            return;
+        }
+
         if(text_id == "") {
             return;
         }

@@ -105,24 +105,41 @@ public class BDController : MonoBehaviour
 
     public KeyValuePair<string, string> Translation(string id)
     {
+        if(infoDoc == null) {
+            return new KeyValuePair<string, string>("","");    
+        }
 
         switch (id)
         {
-            case "intro_title": return new KeyValuePair<string, string>(infoDoc.doc.values.intro_title_pt, infoDoc.doc.values.intro_title_en); ;
-            case "intro_t_1": return new KeyValuePair<string, string>(infoDoc.doc.values.intro_t_1_pt, infoDoc.doc.values.intro_t_1_en); ;
-            case "intro_d_1": return new KeyValuePair<string, string>(infoDoc.doc.values.intro_d_1_pt, infoDoc.doc.values.intro_d_1_en); ;
-            case "intro_t_2": return new KeyValuePair<string, string>(infoDoc.doc.values.intro_t_2_pt, infoDoc.doc.values.intro_t_2_en); ;
-            case "intro_d_2": return new KeyValuePair<string, string>(infoDoc.doc.values.intro_d_2_pt, infoDoc.doc.values.intro_d_2_en); ;
-            case "intro_t_3": return new KeyValuePair<string, string>(infoDoc.doc.values.intro_t_3_pt, infoDoc.doc.values.intro_t_3_en); ;
-            case "intro_d_3": return new KeyValuePair<string, string>(infoDoc.doc.values.intro_d_3_pt, infoDoc.doc.values.intro_d_3_en); ;
-            case "intro_b_1": return new KeyValuePair<string, string>(infoDoc.doc.values.intro_b_1_pt, infoDoc.doc.values.intro_b_1_en); ;
-            case "ingame_d_1": return new KeyValuePair<string, string>(infoDoc.doc.values.ingame_d_1_pt, infoDoc.doc.values.ingame_d_1_en); ;
-            case "ingame_d_2": return new KeyValuePair<string, string>(infoDoc.doc.values.ingame_d_2_pt, infoDoc.doc.values.ingame_d_2_en); ;
-            case "ingame_d_3": return new KeyValuePair<string, string>(infoDoc.doc.values.ingame_d_3_pt, infoDoc.doc.values.ingame_d_3_en); ;
-            case "ingame_d_4": return new KeyValuePair<string, string>(infoDoc.doc.values.ingame_d_4_pt, infoDoc.doc.values.ingame_d_4_en); ;
-            case "ingame_b_1": return new KeyValuePair<string, string>(infoDoc.doc.values.ingame_b_1_pt, infoDoc.doc.values.ingame_b_1_en); ;
-            case "ingame_b_2": return new KeyValuePair<string, string>(infoDoc.doc.values.ingame_b_2_pt, infoDoc.doc.values.ingame_b_2_en); ;
-            case "finish_d": return new KeyValuePair<string, string>(infoDoc.doc.values.finish_d_pt, infoDoc.doc.values.finish_d_en); ;
+            case "intro_title": return new KeyValuePair<string, string>(infoDoc.doc.values.intro_title_pt, infoDoc.doc.values.intro_title_en); 
+            case "welcome_1": return new KeyValuePair<string, string>(infoDoc.doc.values.welcome_1_pt, infoDoc.doc.values.welcome_1_en); 
+            case "welcome_2": return new KeyValuePair<string, string>(infoDoc.doc.values.welcome_2_pt, infoDoc.doc.values.welcome_2_en); 
+            case "intro_t_1": return new KeyValuePair<string, string>(infoDoc.doc.values.intro_t_1_pt, infoDoc.doc.values.intro_t_1_en); 
+            case "intro_d_1": return new KeyValuePair<string, string>(infoDoc.doc.values.intro_d_1_pt, infoDoc.doc.values.intro_d_1_en); 
+            case "intro_t_2": return new KeyValuePair<string, string>(infoDoc.doc.values.intro_t_2_pt, infoDoc.doc.values.intro_t_2_en); 
+            case "intro_d_2": return new KeyValuePair<string, string>(infoDoc.doc.values.intro_d_2_pt, infoDoc.doc.values.intro_d_2_en); 
+            case "intro_t_3": return new KeyValuePair<string, string>(infoDoc.doc.values.intro_t_3_pt, infoDoc.doc.values.intro_t_3_en); 
+            case "intro_d_3": return new KeyValuePair<string, string>(infoDoc.doc.values.intro_d_3_pt, infoDoc.doc.values.intro_d_3_en); 
+            case "intro_t_4": return new KeyValuePair<string, string>(infoDoc.doc.values.intro_t_4_pt, infoDoc.doc.values.intro_t_4_en); 
+            case "intro_d_4": return new KeyValuePair<string, string>(infoDoc.doc.values.intro_d_4_pt, infoDoc.doc.values.intro_d_4_en); 
+            case "intro_b_1": return new KeyValuePair<string, string>(infoDoc.doc.values.intro_b_1_pt, infoDoc.doc.values.intro_b_1_en); 
+            
+            
+            case "intro2_t_1": return new KeyValuePair<string, string>(infoDoc.doc.values.intro2_t_1_pt, infoDoc.doc.values.intro2_t_1_en); 
+            case "intro2_d_1": return new KeyValuePair<string, string>(infoDoc.doc.values.intro2_d_1_pt, infoDoc.doc.values.intro2_d_1_en); 
+            case "intro2_t_2": return new KeyValuePair<string, string>(infoDoc.doc.values.intro2_t_2_pt, infoDoc.doc.values.intro2_t_2_en); 
+            case "intro2_d_2": return new KeyValuePair<string, string>(infoDoc.doc.values.intro2_d_2_pt, infoDoc.doc.values.intro2_d_2_en); 
+            /*
+            case "ingame_d_1": return new KeyValuePair<string, string>(infoDoc.doc.values.ingame_d_1_pt, infoDoc.doc.values.ingame_d_1_en); 
+            case "ingame_d_2": return new KeyValuePair<string, string>(infoDoc.doc.values.ingame_d_2_pt, infoDoc.doc.values.ingame_d_2_en); 
+            case "ingame_d_3": return new KeyValuePair<string, string>(infoDoc.doc.values.ingame_d_3_pt, infoDoc.doc.values.ingame_d_3_en); 
+            case "ingame_d_4": return new KeyValuePair<string, string>(infoDoc.doc.values.ingame_d_4_pt, infoDoc.doc.values.ingame_d_4_en); 
+            */
+            case "ingame_b_1": return new KeyValuePair<string, string>(infoDoc.doc.values.ingame_b_1_pt, infoDoc.doc.values.ingame_b_1_en); 
+            case "ingame_b_2": return new KeyValuePair<string, string>(infoDoc.doc.values.ingame_b_2_pt, infoDoc.doc.values.ingame_b_2_en); 
+            case "ingame_b_3": return new KeyValuePair<string, string>(infoDoc.doc.values.ingame_b_3_pt, infoDoc.doc.values.ingame_b_3_en); 
+            case "finish_d": return new KeyValuePair<string, string>(infoDoc.doc.values.finish_d_pt, infoDoc.doc.values.finish_d_en); 
+            default: Debug.Log("Missing " + id);break;
         }
 
         return new KeyValuePair<string, string>("","");
