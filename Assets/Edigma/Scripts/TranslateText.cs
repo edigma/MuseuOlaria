@@ -51,6 +51,9 @@ public class TranslateText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!UIController.Instance) {
+            return;
+        }
         if (UIController.Instance.LanguageEN && wasPT)
         {
             wasPT = false;

@@ -108,7 +108,8 @@ public class SettingsManager : MonoBehaviour
 
         Debug.Log("Loading settings from: " + Application.persistentDataPath + "/settings/");
         
-        DebugText.Instance.SetText("Loading settings from: " + Application.persistentDataPath + "/settings/");
+        if(DebugText.Instance)
+            DebugText.Instance.SetText("Loading settings from: " + Application.persistentDataPath + "/settings/");
 
         if (!File.Exists(path))
         {
@@ -123,7 +124,8 @@ public class SettingsManager : MonoBehaviour
         if (json != null)
         {
             appSettings = JsonUtility.FromJson<ASettings>(json);
-            DebugText.Instance.SetText("BD url: " + appSettings.appSettings.bdUrl);
+            if(DebugText.Instance)
+                DebugText.Instance.SetText("BD url: " + appSettings.appSettings.bdUrl);
         }
 
         m_settingsLoaded = true;

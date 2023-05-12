@@ -320,6 +320,7 @@ public class MorphedCylinder : MonoBehaviour
                                 }
                             }
                         }
+                        continue;
                     }
                     else
                     {
