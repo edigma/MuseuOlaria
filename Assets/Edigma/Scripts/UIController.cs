@@ -246,6 +246,14 @@ public class UIController : MonoBehaviour
         }
     }
 
+    public void Unlock()
+    {
+        locked = false;
+        Home();
+        Debug.Log("UNLOCKED");
+        lastInteraction = 0.0f;
+    }
+
 
     IEnumerator MeshRestart()
     {
@@ -276,7 +284,8 @@ public class UIController : MonoBehaviour
     bool helping = false;
     public void TempHelp()
     {
-        if(helping) {
+        if (helping)
+        {
             return;
         }
         StartCoroutine(TempHelpRoutine());
