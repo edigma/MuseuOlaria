@@ -78,7 +78,7 @@ public class UIController : MonoBehaviour
         LeapButton lR = null;
         LeapButton lL = null;
 
-        mainOffset.position = new Vector3(0.0f, 0.0f, BDController.Instance.ZOffset());
+        mainOffset.position = new Vector3(0.0f, BDController.Instance.YOffset(), BDController.Instance.ZOffset());
 
         if (!handL.gameObject.activeInHierarchy && !handR.gameObject.activeInHierarchy)
         {

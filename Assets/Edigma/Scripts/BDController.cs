@@ -93,6 +93,15 @@ public class BDController : MonoBehaviour
         return 0.0f;
     }
 
+        public float YOffset()
+    {
+        if (infoDoc != null)
+        {
+            return infoDoc.doc.values.y_offset;
+        }
+        return 0.0f;
+    }
+
          public int PhidgetSerialNumber()
     {
         if (infoDoc != null)
